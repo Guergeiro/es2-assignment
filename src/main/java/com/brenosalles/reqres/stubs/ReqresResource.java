@@ -1,8 +1,6 @@
 package com.brenosalles.reqres.stubs;
 
 import com.brenosalles.reqres.IReqresResource;
-import com.brenosalles.reqres.http.BadRequestException;
-import com.brenosalles.reqres.http.NotFoundException;
 import com.brenosalles.resources.Resource;
 
 import org.json.simple.JSONArray;
@@ -27,11 +25,12 @@ public class ReqresResource implements IReqresResource {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject readResource(Integer id) throws NotFoundException {
-        if (id == 0) {
-            throw new NotFoundException();
-        }
+    public JSONObject readResource(Integer id) {
         JSONObject obj = new JSONObject();
+        if (id == 0) {
+            obj.put("error", "Resource not found");
+            return obj;
+        }
         obj.put("id", id);
         obj.put("name", 1 + "Name");
         obj.put("year", 2000 + 1);
@@ -42,11 +41,12 @@ public class ReqresResource implements IReqresResource {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject createResource(Resource resource) throws BadRequestException {
-        if (resource.getId() != null) {
-            throw new BadRequestException();
-        }
+    public JSONObject createResource(Resource resource) {
         JSONObject obj = new JSONObject();
+        if (resource.getId() != null) {
+            obj.put("error", "Bad request");
+            return obj;
+        }
         obj.put("id", 1);
         obj.put("name", resource.getName());
         obj.put("year", resource.getYear());
@@ -57,14 +57,16 @@ public class ReqresResource implements IReqresResource {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject updateResource(Integer id, Resource resource) throws NotFoundException, BadRequestException {
+    public JSONObject updateResource(Integer id, Resource resource) {
+        JSONObject obj = new JSONObject();
         if (id == 0) {
-            throw new NotFoundException();
+            obj.put("error", "Resource not found");
+            return obj;
         }
         if (resource.getId() != null) {
-            throw new BadRequestException();
+            obj.put("error", "Bad request");
+            return obj;
         }
-        JSONObject obj = new JSONObject();
         obj.put("id", id);
         obj.put("name", resource.getName());
         obj.put("year", resource.getYear());
@@ -74,10 +76,7 @@ public class ReqresResource implements IReqresResource {
     }
 
     @Override
-    public void deleteResource(Integer id) throws NotFoundException {
-        if (id == 0) {
-            throw new NotFoundException();
-        }
+    public void deleteResource(Integer id) {
         return;
     }
 }

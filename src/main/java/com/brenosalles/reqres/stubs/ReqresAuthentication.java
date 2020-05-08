@@ -1,8 +1,6 @@
 package com.brenosalles.reqres.stubs;
 
 import com.brenosalles.reqres.IReqresAuthentication;
-import com.brenosalles.reqres.http.BadRequestException;
-import com.brenosalles.reqres.http.UnauthorizedException;
 import com.brenosalles.users.User;
 
 import org.json.simple.JSONObject;
@@ -10,17 +8,20 @@ import org.json.simple.JSONObject;
 public class ReqresAuthentication implements IReqresAuthentication {
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject register(User user, String password) throws BadRequestException {
+    public JSONObject register(User user, String password) {
+        JSONObject obj = new JSONObject();
         if (user == null) {
-            throw new BadRequestException("Missing email or username");
+            obj.put("error", "Missing email or username");
+            return obj;
         }
         if (user.getEmail() == null) {
-            throw new BadRequestException("Missing email or username");
+            obj.put("error", "Missing email or username");
+            return obj;
         }
         if (password == null) {
-            throw new BadRequestException("Missing password");
+            obj.put("error", "Missing password");
+            return obj;
         }
-        JSONObject obj = new JSONObject();
         obj.put("id", 4);
         obj.put("token", "QpwL5tke4Pnpja7X4");
         return obj;
@@ -28,17 +29,18 @@ public class ReqresAuthentication implements IReqresAuthentication {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject login(User user, String password) throws BadRequestException, UnauthorizedException {
+    public JSONObject login(User user, String password) {
+        JSONObject obj = new JSONObject();
         if (user == null) {
-            throw new BadRequestException("Missing email or username");
+            obj.put("error", "Missing email or username");
+            return obj;
         }
         if (user.getEmail() == null) {
-            throw new BadRequestException("Missing email or username");
+            obj.put("error", "Missing email or username");
         }
         if (password == null) {
-            throw new BadRequestException("Missing password");
+            obj.put("error", "Missing password");
         }
-        JSONObject obj = new JSONObject();
         obj.put("token", "QpwL5tke4Pnpja7X4");
         return obj;
     }

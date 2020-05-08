@@ -1,8 +1,6 @@
 package com.brenosalles.reqres.stubs;
 
 import com.brenosalles.reqres.IReqresUser;
-import com.brenosalles.reqres.http.BadRequestException;
-import com.brenosalles.reqres.http.NotFoundException;
 import com.brenosalles.users.User;
 
 import org.json.simple.JSONArray;
@@ -27,11 +25,12 @@ public class ReqresUser implements IReqresUser {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject readUser(Integer id) throws NotFoundException {
-        if (id == 0) {
-            throw new NotFoundException();
-        }
+    public JSONObject readUser(Integer id) {
         JSONObject obj = new JSONObject();
+        if (id == 0) {
+            obj.put("error", "Resource not found");
+            return obj;
+        }
         obj.put("id", id);
         obj.put("email", 1 + "@email.com");
         obj.put("first_name", 1 + "FName");
@@ -42,11 +41,12 @@ public class ReqresUser implements IReqresUser {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject createUser(User user) throws BadRequestException {
-        if (user.getId() != null) {
-            throw new BadRequestException();
-        }
+    public JSONObject createUser(User user) {
         JSONObject obj = new JSONObject();
+        if (user.getId() != null) {
+            obj.put("error", "Bad request");
+            return obj;
+        }
         obj.put("id", 1);
         obj.put("email", user.getEmail());
         obj.put("first_name", user.getFirstName());
@@ -57,14 +57,16 @@ public class ReqresUser implements IReqresUser {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject updateUser(Integer id, User user) throws NotFoundException, BadRequestException {
+    public JSONObject updateUser(Integer id, User user) {
+        JSONObject obj = new JSONObject();
         if (id == 0) {
-            throw new NotFoundException();
+            obj.put("error", "Resource not found");
+            return obj;
         }
         if (user.getId() != null) {
-            throw new BadRequestException();
+            obj.put("error", "Bad request");
+            return obj;
         }
-        JSONObject obj = new JSONObject();
         obj.put("id", id);
         obj.put("email", user.getEmail());
         obj.put("first_name", user.getFirstName());
@@ -74,10 +76,8 @@ public class ReqresUser implements IReqresUser {
     }
 
     @Override
-    public void deleteUser(Integer id) throws NotFoundException {
-        if (id == 0) {
-            throw new NotFoundException();
-        }
+    public void deleteUser(Integer id) {
+
         return;
     }
 
