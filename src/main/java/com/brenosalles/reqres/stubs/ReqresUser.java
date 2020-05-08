@@ -1,6 +1,8 @@
 package com.brenosalles.reqres.stubs;
 
 import com.brenosalles.reqres.IReqresUser;
+import com.brenosalles.reqres.exceptions.BadRequestException;
+import com.brenosalles.reqres.exceptions.NotFoundException;
 import com.brenosalles.users.User;
 
 import org.json.simple.JSONArray;
@@ -25,7 +27,10 @@ public class ReqresUser implements IReqresUser {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject readUser(Integer id) {
+    public JSONObject readUser(Integer id) throws NotFoundException {
+        if (id == 0) {
+            throw new NotFoundException();
+        }
         JSONObject obj = new JSONObject();
         obj.put("id", id);
         obj.put("email", 1 + "@email.com");
@@ -37,7 +42,10 @@ public class ReqresUser implements IReqresUser {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject createUser(User user) {
+    public JSONObject createUser(User user) throws BadRequestException {
+        if (user.getId() != null) {
+            throw new BadRequestException();
+        }
         JSONObject obj = new JSONObject();
         obj.put("id", 1);
         obj.put("email", user.getEmail());
@@ -49,7 +57,13 @@ public class ReqresUser implements IReqresUser {
 
     @Override
     @SuppressWarnings("unchecked")
-    public JSONObject updateUser(Integer id, User user) {
+    public JSONObject updateUser(Integer id, User user) throws NotFoundException, BadRequestException {
+        if (id == 0) {
+            throw new NotFoundException();
+        }
+        if (user.getId() != null) {
+            throw new BadRequestException();
+        }
         JSONObject obj = new JSONObject();
         obj.put("id", id);
         obj.put("email", user.getEmail());
@@ -60,7 +74,10 @@ public class ReqresUser implements IReqresUser {
     }
 
     @Override
-    public void deleteUser(Integer id) {
+    public void deleteUser(Integer id) throws NotFoundException {
+        if (id == 0) {
+            throw new NotFoundException();
+        }
         return;
     }
 
