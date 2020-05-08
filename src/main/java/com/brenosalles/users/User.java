@@ -6,19 +6,22 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
+    private String avatar;
 
     // Constructors
-    protected User(Integer id, String email, String firstName, String lastName) {
+    protected User(Integer id, String email, String firstName, String lastName, String avatar) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.avatar = avatar;
     }
 
-    protected User(String email, String firstName, String lastName) {
+    protected User(String email, String firstName, String lastName, String avatar) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.avatar = avatar;
     }
 
     // Getters & Setters
@@ -52,5 +55,13 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
