@@ -27,7 +27,7 @@ public class ReqresUser implements IReqresUser {
     @SuppressWarnings("unchecked")
     public JSONObject readUser(Integer id) {
         JSONObject obj = new JSONObject();
-        obj.put("id", 1);
+        obj.put("id", id);
         obj.put("email", 1 + "@email.com");
         obj.put("first_name", 1 + "FName");
         obj.put("last_name", 1 + "LName");
