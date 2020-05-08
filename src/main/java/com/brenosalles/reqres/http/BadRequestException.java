@@ -1,4 +1,4 @@
-package com.brenosalles.reqres.exceptions;
+package com.brenosalles.reqres.http;
 
 public class BadRequestException extends Exception {
     /**

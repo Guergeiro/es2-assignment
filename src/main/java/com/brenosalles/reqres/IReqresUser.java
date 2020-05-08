@@ -1,7 +1,7 @@
 package com.brenosalles.reqres;
 
-import com.brenosalles.reqres.exceptions.BadRequestException;
-import com.brenosalles.reqres.exceptions.NotFoundException;
+import com.brenosalles.reqres.http.BadRequestException;
+import com.brenosalles.reqres.http.NotFoundException;
 import com.brenosalles.users.User;
 
 import org.json.simple.JSONArray;

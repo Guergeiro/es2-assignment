@@ -1,8 +1,8 @@
 package com.brenosalles.reqres.stubs;
 
 import com.brenosalles.reqres.IReqresUser;
-import com.brenosalles.reqres.exceptions.BadRequestException;
-import com.brenosalles.reqres.exceptions.NotFoundException;
+import com.brenosalles.reqres.http.BadRequestException;
+import com.brenosalles.reqres.http.NotFoundException;
 import com.brenosalles.users.User;
 
 import org.json.simple.JSONArray;

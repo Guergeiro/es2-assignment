@@ -1,8 +1,8 @@
 package com.brenosalles.reqres.stubs;
 
 import com.brenosalles.reqres.IReqresAuthentication;
-import com.brenosalles.reqres.exceptions.BadRequestException;
-import com.brenosalles.reqres.exceptions.UnauthorizedException;
+import com.brenosalles.reqres.http.BadRequestException;
+import com.brenosalles.reqres.http.UnauthorizedException;
 import com.brenosalles.users.User;
 
 import org.json.simple.JSONObject;
