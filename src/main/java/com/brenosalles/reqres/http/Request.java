@@ -15,9 +15,7 @@ public abstract class Request {
         return obj.toJSONString();
     }
 
-    public static Response makeHttpRequest(String url, HttpMethods method, String body)
-            throws BadRequestException, UnauthorizedException, NotFoundException {
-
+    public static Response makeHttpRequest(String url, HttpMethods method, String body) {
         StringBuilder result = new StringBuilder();
         HttpURLConnection conn = null;
         try {
