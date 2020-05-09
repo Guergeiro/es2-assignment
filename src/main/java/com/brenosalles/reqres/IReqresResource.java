@@ -1,19 +1,16 @@
 package com.brenosalles.reqres;
 
+import com.brenosalles.reqres.http.Response;
 import com.brenosalles.resources.Resource;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
-
 public interface IReqresResource {
-    JSONArray readResources() throws ParseException;
+    Response readResources();
 
-    JSONObject readResource(Integer id) throws ParseException;
+    Response readResource(Integer id);
 
-    JSONObject createResource(Resource resource) throws ParseException;
+    Response createResource(Resource resource);
 
-    JSONObject updateResource(Integer id, Resource resource) throws ParseException;
+    Response updateResource(Integer id, Resource resource);
 
-    void deleteResource(Integer id);
+    Response deleteResource(Integer id);
 }

@@ -1,19 +1,16 @@
 package com.brenosalles.reqres;
 
+import com.brenosalles.reqres.http.Response;
 import com.brenosalles.users.User;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
-
 public interface IReqresUser {
-    JSONArray readUsers() throws ParseException;
+    Response readUsers();
 
-    JSONObject readUser(Integer id) throws ParseException;
+    Response readUser(Integer id);
 
-    JSONObject createUser(User user) throws ParseException;
+    Response createUser(User user);
 
-    JSONObject updateUser(Integer id, User user) throws ParseException;
+    Response updateUser(Integer id, User user);
 
-    void deleteUser(Integer id);
+    Response deleteUser(Integer id);
 }

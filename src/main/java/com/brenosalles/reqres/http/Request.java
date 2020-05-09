@@ -11,7 +11,11 @@ import java.net.URL;
 import org.json.simple.JSONObject;
 
 public abstract class Request {
-    public static String makeHttpRequest(String url, HttpMethods method, JSONObject body)
+    public static String convertJsonToString(JSONObject obj) {
+        return obj.toJSONString();
+    }
+
+    public static Response makeHttpRequest(String url, HttpMethods method, String body)
             throws BadRequestException, UnauthorizedException, NotFoundException {
 
         StringBuilder result = new StringBuilder();
@@ -29,7 +33,7 @@ public abstract class Request {
                     conn.setRequestProperty("Content-Type", "application/json");
                     conn.setDoOutput(true);
                     DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-                    wr.writeBytes(body.toJSONString());
+                    wr.writeBytes(body);
                     wr.close();
                     break;
                 default:
@@ -44,13 +48,6 @@ public abstract class Request {
                     result.append(line);
                 }
                 rd.close();
-                if (conn.getResponseCode() == 400) {
-                    throw new BadRequestException(result.toString());
-                } else if (conn.getResponseCode() == 401) {
-                    throw new UnauthorizedException(result.toString());
-                } else if (conn.getResponseCode() == 404) {
-                    throw new NotFoundException(result.toString());
-                }
             } else {
 
                 InputStream is = conn.getInputStream();
@@ -60,7 +57,9 @@ public abstract class Request {
                     result.append(line);
                 }
                 rd.close();
+
             }
+            return new Response(conn.getResponseCode(), result.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,6 +69,6 @@ public abstract class Request {
             }
         }
 
-        return result.toString();
+        return new Response(500, "Internal server error");
     }
 }
