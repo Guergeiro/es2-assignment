@@ -1,6 +1,6 @@
-package com.brenosalles.reqres.stubs;
+package com.brenosalles.reqres.api.stubs;
 
-import com.brenosalles.reqres.IReqresAuthentication;
+import com.brenosalles.reqres.api.IReqresAuthentication;
 import com.brenosalles.reqres.http.Response;
 import com.brenosalles.users.User;
 

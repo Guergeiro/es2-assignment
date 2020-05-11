@@ -8,13 +8,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.json.simple.JSONObject;
-
 public abstract class Request {
-    public static String convertJsonToString(JSONObject obj) {
-        return obj.toJSONString();
-    }
-
     public static Response makeHttpRequest(String url, HttpMethods method, String body) {
         StringBuilder result = new StringBuilder();
         HttpURLConnection conn = null;
