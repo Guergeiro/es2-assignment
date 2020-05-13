@@ -41,7 +41,6 @@ public abstract class Request {
                 }
                 rd.close();
             } else {
-
                 InputStream is = conn.getInputStream();
                 BufferedReader rd = new BufferedReader(new InputStreamReader(is));
                 String line;
