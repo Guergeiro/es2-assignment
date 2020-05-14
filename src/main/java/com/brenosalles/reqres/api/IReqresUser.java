@@ -1,16 +1,17 @@
 package com.brenosalles.reqres.api;
 
-import com.brenosalles.reqres.http.Response;
+import java.util.ArrayList;
+
 import com.brenosalles.users.User;
 
 public interface IReqresUser {
-    Response readUsers();
+    ArrayList<User> readUsers();
 
-    Response readUser(Integer id);
+    User readUser(Integer id);
 
-    Response createUser(User user);
+    User createUser(User user);
 
-    Response updateUser(Integer id, User user);
+    Boolean updateUser(Integer id, User user);
 
-    Response deleteUser(Integer id);
+    Boolean deleteUser(Integer id);
 }

@@ -1,90 +1,59 @@
 package com.brenosalles.reqres.api.stubs;
 
+import java.util.ArrayList;
+
 import com.brenosalles.reqres.api.IReqresUser;
 import com.brenosalles.reqres.http.Response;
 import com.brenosalles.users.User;
+import com.brenosalles.users.UserFactory;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class ReqresUser implements IReqresUser {
     @Override
-    @SuppressWarnings("unchecked")
-    public Response readUsers() {
-        JSONArray arr = new JSONArray();
+    public ArrayList<User> readUsers() {
+        ArrayList<User> arr = new ArrayList<User>();
         for (Integer i = 1; i < 5; i++) {
-            JSONObject obj = new JSONObject();
-            obj.put("id", i);
-            obj.put("email", i + "@email.com");
-            obj.put("first_name", i + "FName");
-            obj.put("last_name", i + "LName");
-            obj.put("avatar", "https://" + i + ".com");
-            arr.add(obj);
+            arr.add(UserFactory.createUser(i, i + "@email.com", i + "FName", i + "LName", "https://" + i + ".com"));
         }
-        return new Response(200, arr.toJSONString());
+        return arr;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Response readUser(Integer id) {
-        JSONObject obj = new JSONObject();
+    public User readUser(Integer id) {
         if (id == 0) {
-            obj.put("error", "Resource not found");
-            return new Response(404, obj.toJSONString());
+            return null;
         }
-        obj.put("id", id);
-        obj.put("email", 1 + "@email.com");
-        obj.put("first_name", 1 + "FName");
-        obj.put("last_name", 1 + "LName");
-        obj.put("avatar", "https://" + 1 + ".com");
-        return new Response(200, obj.toJSONString());
+        return UserFactory.createUser(id, id + "@email.com", id + "FName", id + "LName", "https://" + id + ".com");
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Response createUser(User user) {
-        JSONObject obj = new JSONObject();
+    public User createUser(User user) {
         if (user.getId() != null) {
-            obj.put("error", "Bad request");
-            return new Response(400, obj.toJSONString());
+            return null;
         }
-        obj.put("id", 1);
-        obj.put("email", user.getEmail());
-        obj.put("first_name", user.getFirstName());
-        obj.put("last_name", user.getLastName());
-        obj.put("avatar", user.getAvatar());
-        return new Response(201, obj.toJSONString());
+        user.setId(1);
+        return user;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Response updateUser(Integer id, User user) {
-        JSONObject obj = new JSONObject();
+    public Boolean updateUser(Integer id, User user) {
         if (id == 0) {
-            obj.put("error", "Resource not found");
-            return new Response(404, obj.toJSONString());
+            return false;
         }
         if (user.getId() != null) {
-            obj.put("error", "Bad request");
-            return new Response(400, obj.toJSONString());
+            return false;
         }
-        obj.put("id", id);
-        obj.put("email", user.getEmail());
-        obj.put("first_name", user.getFirstName());
-        obj.put("last_name", user.getLastName());
-        obj.put("avatar", user.getAvatar());
-        return new Response(200, obj.toJSONString());
+        return true;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Response deleteUser(Integer id) {
-        JSONObject obj = new JSONObject();
+    public Boolean deleteUser(Integer id) {
         if (id == 0) {
-            obj.put("error", "Resource not found");
-            return new Response(404, obj.toJSONString());
+            return false;
         }
-        return new Response(204, "");
+        return true;
     }
 
 }
