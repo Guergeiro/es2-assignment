@@ -1,16 +1,17 @@
 package com.brenosalles.reqres.api;
 
-import com.brenosalles.reqres.http.Response;
+import java.util.ArrayList;
+
 import com.brenosalles.resources.Resource;
 
 public interface IReqresResource {
-    Response readResources();
+    ArrayList<Resource> readResources();
 
-    Response readResource(Integer id);
+    Resource readResource(Integer id);
 
-    Response createResource(Resource resource);
+    Resource createResource(Resource resource);
 
-    Response updateResource(Integer id, Resource resource);
+    Boolean updateResource(Integer id, Resource resource);
 
-    Response deleteResource(Integer id);
+    Boolean deleteResource(Integer id);
 }

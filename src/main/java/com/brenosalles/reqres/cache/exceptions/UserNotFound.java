@@ -1,4 +1,4 @@
-package com.brenosalles.reqres.cache.Exceptions;
+package com.brenosalles.reqres.cache.exceptions;
 
 public class UserNotFound extends Exception {
     /**
