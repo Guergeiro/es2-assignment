@@ -1,4 +1,4 @@
-package com.brenosalles.reqres;
+package com.brenosalles.reqres.api;
 
 import com.brenosalles.reqres.http.Response;
 import com.brenosalles.resources.Resource;

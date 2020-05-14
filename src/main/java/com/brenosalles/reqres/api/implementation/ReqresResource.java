@@ -1,6 +1,6 @@
-package com.brenosalles.reqres.implementation;
+package com.brenosalles.reqres.api.implementation;
 
-import com.brenosalles.reqres.IReqresResource;
+import com.brenosalles.reqres.api.IReqresResource;
 import com.brenosalles.reqres.http.HttpMethods;
 import com.brenosalles.reqres.http.Request;
 import com.brenosalles.reqres.http.Response;
