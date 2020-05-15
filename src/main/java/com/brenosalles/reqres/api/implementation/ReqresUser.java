@@ -23,7 +23,8 @@ public class ReqresUser implements IReqresUser {
         if (response.getStatusCode() < 400) {
             JSONParser parser = new JSONParser();
             try {
-                JSONArray arr = (JSONArray) parser.parse(response.getBody());
+                JSONObject message = (JSONObject) parser.parse(response.getBody());
+                JSONArray arr = (JSONArray) message.get("data");
                 return new ArrayList<User>(arr);
             } catch (ParseException e) {
                 System.out.println(e.getMessage());
@@ -40,7 +41,7 @@ public class ReqresUser implements IReqresUser {
             JSONParser parser = new JSONParser();
             try {
                 JSONObject message = (JSONObject) parser.parse(response.getBody());
-                JSONObject obj = (JSONObject) message.get("message");
+                JSONObject obj = (JSONObject) message.get("data");
                 return UserFactory.createUser((Integer) obj.get("id"), (String) obj.get("email"),
                         (String) obj.get("first_name"), (String) obj.get("last_name"), (String) obj.get("avatar"));
             } catch (ParseException e) {

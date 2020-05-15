@@ -23,7 +23,8 @@ public class ReqresResource implements IReqresResource {
         if (response.getStatusCode() < 400) {
             JSONParser parser = new JSONParser();
             try {
-                JSONArray arr = (JSONArray) parser.parse(response.getBody());
+                JSONObject message = (JSONObject) parser.parse(response.getBody());
+                JSONArray arr = (JSONArray) message.get("data");
                 return new ArrayList<Resource>(arr);
             } catch (ParseException e) {
                 System.out.println(e.getMessage());
@@ -40,7 +41,7 @@ public class ReqresResource implements IReqresResource {
             JSONParser parser = new JSONParser();
             try {
                 JSONObject message = (JSONObject) parser.parse(response.getBody());
-                JSONObject obj = (JSONObject) message.get("message");
+                JSONObject obj = (JSONObject) message.get("data");
                 return ResourceFactory.createResource((Integer) obj.get("id"), (String) obj.get("name"),
                         (Integer) obj.get("year"), (String) obj.get("color"), (String) obj.get("pantone_value"));
             } catch (ParseException e) {

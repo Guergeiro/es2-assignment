@@ -2,7 +2,7 @@ package com.brenosalles.handlers.concrete;
 
 import com.brenosalles.handlers.AbstractHandler;
 import com.brenosalles.reqres.api.IReqresAuthentication;
-import com.brenosalles.reqres.http.Response;
+import com.brenosalles.tokens.Token;
 import com.brenosalles.users.User;
 
 public class AuthenticationRequestHandler extends AbstractHandler {
@@ -16,16 +16,16 @@ public class AuthenticationRequestHandler extends AbstractHandler {
 
     @Override
     public void register(User user, String password) {
-        Response response = apiAuthentication.register(user, password);
-        if (response.getStatusCode() >= 400) {
+        Token token = apiAuthentication.register(user, password);
+        if (token == null) {
             super.register(user, password);
         }
     }
 
     @Override
     public void login(User user, String password) {
-        Response response = apiAuthentication.login(user, password);
-        if (response.getStatusCode() >= 400) {
+        Token token = apiAuthentication.login(user, password);
+        if (token == null) {
             super.login(user, password);
         }
     }
