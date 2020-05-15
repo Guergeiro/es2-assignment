@@ -1,7 +1,6 @@
 package com.brenosalles.reqres.api.stubs;
 
 import com.brenosalles.reqres.api.IReqresAuthentication;
-import com.brenosalles.reqres.http.Response;
 import com.brenosalles.tokens.Token;
 import com.brenosalles.tokens.TokenFactory;
 import com.brenosalles.users.User;

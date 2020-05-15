@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.brenosalles.resources.Resource;
 import com.brenosalles.users.User;
 
-public class AbstractHandler implements IHandler {
+public abstract class AbstractHandler implements IHandler {
     private IHandler nextHandler;
 
     @Override
