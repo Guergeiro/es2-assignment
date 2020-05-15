@@ -1,89 +1,54 @@
 package com.brenosalles.reqres.api.stubs;
 
-import com.brenosalles.reqres.api.IReqresResource;
-import com.brenosalles.reqres.http.Response;
-import com.brenosalles.resources.Resource;
+import java.util.ArrayList;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.brenosalles.reqres.api.IReqresResource;
+import com.brenosalles.resources.Resource;
+import com.brenosalles.resources.ResourceFactory;
 
 public class ReqresResource implements IReqresResource {
     @Override
-    @SuppressWarnings("unchecked")
-    public Response readResources() {
-        JSONArray arr = new JSONArray();
+    public ArrayList<Resource> readResources() {
+        ArrayList<Resource> arr = new ArrayList<Resource>();
         for (Integer i = 1; i < 5; i++) {
-            JSONObject obj = new JSONObject();
-            obj.put("id", i);
-            obj.put("name", i + "Name");
-            obj.put("year", 2000 + i);
-            obj.put("color", "#12345" + i);
-            obj.put("pantone_value", "17-203" + i);
-            arr.add(obj);
+            arr.add(ResourceFactory.createResource(i, i + "Name", 2000 + i, "#12345" + i, "17-203" + i));
         }
-        return new Response(200, arr.toJSONString());
+        return arr;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Response readResource(Integer id) {
-        JSONObject obj = new JSONObject();
+    public Resource readResource(Integer id) {
         if (id == 0) {
-            obj.put("error", "Resource not found");
-            return new Response(400, obj.toJSONString());
+            return null;
         }
-        obj.put("id", id);
-        obj.put("name", 1 + "Name");
-        obj.put("year", 2000 + 1);
-        obj.put("color", "#12345" + 1);
-        obj.put("pantone_value", "17-203" + 1);
-        return new Response(200, obj.toJSONString());
+        return ResourceFactory.createResource(id, 1 + "Name", 2001, "#123456", "17-2031");
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Response createResource(Resource resource) {
-        JSONObject obj = new JSONObject();
+    public Resource createResource(Resource resource) {
         if (resource.getId() != null) {
-            obj.put("error", "Bad request");
-            return new Response(400, obj.toJSONString());
+            return null;
         }
-        obj.put("id", 1);
-        obj.put("name", resource.getName());
-        obj.put("year", resource.getYear());
-        obj.put("color", resource.getColor());
-        obj.put("pantone_value", resource.getPantoneValue());
-        return new Response(201, obj.toJSONString());
+        resource.setId(1);
+        return resource;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Response updateResource(Integer id, Resource resource) {
-        JSONObject obj = new JSONObject();
+    public Boolean updateResource(Integer id, Resource resource) {
         if (id == 0) {
-            obj.put("error", "Resource not found");
-            return new Response(404, obj.toJSONString());
+            return false;
         }
         if (resource.getId() != null) {
-            obj.put("error", "Bad request");
-            return new Response(400, obj.toJSONString());
+            return false;
         }
-        obj.put("id", id);
-        obj.put("name", resource.getName());
-        obj.put("year", resource.getYear());
-        obj.put("color", resource.getColor());
-        obj.put("pantone_value", resource.getPantoneValue());
-        return new Response(200, obj.toJSONString());
+        return true;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Response deleteResource(Integer id) {
-        JSONObject obj = new JSONObject();
+    public Boolean deleteResource(Integer id) {
         if (id == 0) {
-            obj.put("error", "Resource not found");
-            return new Response(404, obj.toJSONString());
+            return false;
         }
-        return new Response(204, "");
+        return true;
     }
 }
