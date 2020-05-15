@@ -92,4 +92,18 @@ public class AbstractHandler implements IHandler {
             nextHandler.deleteResource(id);
         }
     }
+
+    @Override
+    public void register(User user, String password) {
+        if (nextHandler != null) {
+            nextHandler.register(user, password);
+        }
+    }
+
+    @Override
+    public void login(User user, String password) {
+        if (nextHandler != null) {
+            nextHandler.login(user, password);
+        }
+    }
 }

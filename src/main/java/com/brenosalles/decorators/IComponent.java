@@ -26,4 +26,8 @@ public interface IComponent {
     void updateResource(Integer id, Resource resource);
 
     void deleteResource(Integer id);
+
+    void register(User user, String password);
+
+    void login(User user, String password);
 }

@@ -15,11 +15,13 @@ public class UsersRequestHandler extends AbstractHandler {
         this.apiUser = apiUser;
     }
 
+    @Override
     public User createUser(User resource) {
         User res = apiUser.createUser(resource);
         return res != null ? res : super.createUser(resource);
     }
 
+    @Override
     public ArrayList<User> readUsers() {
         ArrayList<User> resources = apiUser.readUsers();
         if (resources.size() != 0) {
@@ -28,18 +30,21 @@ public class UsersRequestHandler extends AbstractHandler {
         return super.readUsers();
     }
 
+    @Override
     public User readUser(Integer id) {
         User resource = apiUser.readUser(id);
 
         return resource != null ? resource : super.readUser(id);
     }
 
+    @Override
     public void updateUser(Integer id, User resource) {
         if (apiUser.updateUser(id, resource) == false) {
             super.updateUser(id, resource);
         }
     }
 
+    @Override
     public void deleteUser(Integer id) {
         if (apiUser.deleteUser(id) == false) {
             super.deleteUser(id);

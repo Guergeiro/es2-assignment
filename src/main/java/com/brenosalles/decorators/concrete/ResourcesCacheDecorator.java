@@ -20,8 +20,9 @@ public class ResourcesCacheDecorator extends Decorator {
 
     @Override
     public Resource createResource(Resource resource) {
-        cache.addResource(resource);
-        return super.createResource(resource);
+        Resource r = super.createResource(resource);
+        cache.addResource(r);
+        return r;
     }
 
     @Override

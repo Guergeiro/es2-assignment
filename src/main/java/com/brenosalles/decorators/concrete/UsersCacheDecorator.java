@@ -20,8 +20,9 @@ public class UsersCacheDecorator extends Decorator {
 
     @Override
     public User createUser(User user) {
-        cache.addUser(user);
-        return super.createUser(user);
+        User u = super.createUser(user);
+        cache.addUser(u);
+        return u;
     }
 
     @Override

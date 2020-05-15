@@ -63,4 +63,14 @@ public abstract class Decorator implements IComponent {
     public void deleteResource(Integer id) {
         component.deleteResource(id);
     }
+
+    @Override
+    public void register(User user, String password) {
+        component.register(user, password);
+    }
+
+    @Override
+    public void login(User user, String password) {
+        component.login(user, password);
+    }
 }
