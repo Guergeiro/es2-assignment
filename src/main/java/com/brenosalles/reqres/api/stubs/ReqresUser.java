@@ -3,12 +3,8 @@ package com.brenosalles.reqres.api.stubs;
 import java.util.ArrayList;
 
 import com.brenosalles.reqres.api.IReqresUser;
-import com.brenosalles.reqres.http.Response;
 import com.brenosalles.users.User;
 import com.brenosalles.users.UserFactory;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 public class ReqresUser implements IReqresUser {
     @Override
@@ -55,5 +51,4 @@ public class ReqresUser implements IReqresUser {
         }
         return true;
     }
-
 }
