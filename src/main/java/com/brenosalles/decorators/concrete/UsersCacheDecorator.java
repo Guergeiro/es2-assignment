@@ -4,16 +4,16 @@ import java.util.ArrayList;
 
 import com.brenosalles.decorators.Decorator;
 import com.brenosalles.decorators.IComponent;
-import com.brenosalles.reqres.cache.UsersCacheRepository;
+import com.brenosalles.reqres.cache.IUsersCache;
 import com.brenosalles.reqres.cache.exceptions.UserNotFound;
 import com.brenosalles.users.User;
 
 public class UsersCacheDecorator extends Decorator {
     // Attributes
-    private UsersCacheRepository cache;
+    private IUsersCache cache;
 
     // Constructor
-    public UsersCacheDecorator(IComponent component, UsersCacheRepository cache) {
+    public UsersCacheDecorator(IComponent component, IUsersCache cache) {
         super(component);
         this.cache = cache;
     }
