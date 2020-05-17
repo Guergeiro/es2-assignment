@@ -3,6 +3,7 @@ package com.brenosalles.decorators;
 import java.util.ArrayList;
 
 import com.brenosalles.resources.Resource;
+import com.brenosalles.tokens.Token;
 import com.brenosalles.users.User;
 
 public interface IComponent {
@@ -27,7 +28,7 @@ public interface IComponent {
 
     void deleteResource(Integer id);
 
-    void register(User user, String password);
+    Token register(User user, String password);
 
-    void login(User user, String password);
+    Token login(User user, String password);
 }

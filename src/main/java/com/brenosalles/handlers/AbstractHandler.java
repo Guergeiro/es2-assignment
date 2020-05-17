@@ -3,6 +3,7 @@ package com.brenosalles.handlers;
 import java.util.ArrayList;
 
 import com.brenosalles.resources.Resource;
+import com.brenosalles.tokens.Token;
 import com.brenosalles.users.User;
 
 public abstract class AbstractHandler implements IHandler {
@@ -94,16 +95,18 @@ public abstract class AbstractHandler implements IHandler {
     }
 
     @Override
-    public void register(User user, String password) {
+    public Token register(User user, String password) {
         if (nextHandler != null) {
-            nextHandler.register(user, password);
+            return nextHandler.register(user, password);
         }
+        return null;
     }
 
     @Override
-    public void login(User user, String password) {
+    public Token login(User user, String password) {
         if (nextHandler != null) {
-            nextHandler.login(user, password);
+            return nextHandler.login(user, password);
         }
+        return null;
     }
 }

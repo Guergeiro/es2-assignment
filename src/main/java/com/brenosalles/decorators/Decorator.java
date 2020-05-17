@@ -3,6 +3,7 @@ package com.brenosalles.decorators;
 import java.util.ArrayList;
 
 import com.brenosalles.resources.Resource;
+import com.brenosalles.tokens.Token;
 import com.brenosalles.users.User;
 
 public abstract class Decorator implements IComponent {
@@ -65,12 +66,12 @@ public abstract class Decorator implements IComponent {
     }
 
     @Override
-    public void register(User user, String password) {
-        component.register(user, password);
+    public Token register(User user, String password) {
+        return component.register(user, password);
     }
 
     @Override
-    public void login(User user, String password) {
-        component.login(user, password);
+    public Token login(User user, String password) {
+        return component.login(user, password);
     }
 }

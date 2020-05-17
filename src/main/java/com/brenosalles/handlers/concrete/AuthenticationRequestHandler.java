@@ -15,18 +15,20 @@ public class AuthenticationRequestHandler extends AbstractHandler {
     }
 
     @Override
-    public void register(User user, String password) {
+    public Token register(User user, String password) {
         Token token = apiAuthentication.register(user, password);
         if (token == null) {
-            super.register(user, password);
+            return super.register(user, password);
         }
+        return token;
     }
 
     @Override
-    public void login(User user, String password) {
+    public Token login(User user, String password) {
         Token token = apiAuthentication.login(user, password);
         if (token == null) {
-            super.login(user, password);
+            return super.login(user, password);
         }
+        return token;
     }
 }

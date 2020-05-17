@@ -16,9 +16,9 @@ public class UsersRequestHandler extends AbstractHandler {
     }
 
     @Override
-    public User createUser(User resource) {
-        User res = apiUser.createUser(resource);
-        return res != null ? res : super.createUser(resource);
+    public User createUser(User user) {
+        User res = apiUser.createUser(user);
+        return res != null ? res : super.createUser(user);
     }
 
     @Override
