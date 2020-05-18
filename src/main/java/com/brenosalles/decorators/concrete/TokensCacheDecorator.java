@@ -3,6 +3,7 @@ package com.brenosalles.decorators.concrete;
 import com.brenosalles.decorators.Decorator;
 import com.brenosalles.decorators.IComponent;
 import com.brenosalles.reqres.cache.ITokensCache;
+import com.brenosalles.reqres.cache.exceptions.InvalidToken;
 import com.brenosalles.tokens.Token;
 import com.brenosalles.users.User;
 
@@ -19,17 +20,23 @@ public class TokensCacheDecorator extends Decorator {
     @Override
     public Token register(User user, String password) {
         Token token = super.register(user, password);
-        if (token != null) {
+
+        try {
             cache.addToken(token);
+        } catch (InvalidToken e) {
+            System.out.println(e.getMessage());
         }
+
         return token;
     }
 
     @Override
     public Token login(User user, String password) {
         Token token = super.login(user, password);
-        if (token != null) {
+        try {
             cache.addToken(token);
+        } catch (InvalidToken e) {
+            System.out.println(e.getMessage());
         }
         return token;
     }
