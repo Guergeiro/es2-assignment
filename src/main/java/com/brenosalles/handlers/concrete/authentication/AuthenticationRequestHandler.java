@@ -1,4 +1,4 @@
-package com.brenosalles.handlers.concrete;
+package com.brenosalles.handlers.concrete.authentication;
 
 import com.brenosalles.handlers.AbstractHandler;
 import com.brenosalles.reqres.api.IReqresAuthentication;
