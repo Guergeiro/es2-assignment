@@ -1,4 +1,4 @@
-package com.brenosalles.handlers.concrete;
+package com.brenosalles.handlers.concrete.resources;
 
 import java.util.ArrayList;
 
