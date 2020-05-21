@@ -1,8 +1,18 @@
 package com.brenosalles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+
+import com.brenosalles.handlers.IHandler;
+import com.brenosalles.handlers.concrete.users.UsersRequestHandler;
+import com.brenosalles.handlers.concrete.users.UsersValidatorHandler;
+import com.brenosalles.reqres.api.IReqresUser;
+import com.brenosalles.reqres.api.stubs.ReqresUser;
 import com.brenosalles.users.InvalidUserException;
 import com.brenosalles.users.User;
 import com.brenosalles.users.UserFactory;
@@ -116,5 +126,130 @@ public class UserUnitTest {
         assertEquals(User.class,
                 UserFactory.createUser(null, "email@email.com", "firstName", "lastName", "avatar").getClass());
 
+    }
+
+    @Test
+    public void readUsersOk() {
+        IReqresUser apiAuthentication = new ReqresUser();
+        IHandler handler1 = new UsersValidatorHandler();
+        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+
+        handler1.setNext(handler2);
+
+        assertEquals((new ArrayList<User>()).getClass(), handler1.readUsers().getClass());
+    }
+
+    @Test
+    public void readUserWithNullId() {
+        IReqresUser apiAuthentication = new ReqresUser();
+        IHandler handler1 = new UsersValidatorHandler();
+        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+
+        handler1.setNext(handler2);
+
+        assertNull(handler1.readUser(null));
+    }
+
+    @Test
+    public void readUserWithInvalidId() {
+        IReqresUser apiAuthentication = new ReqresUser();
+        IHandler handler1 = new UsersValidatorHandler();
+        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+
+        handler1.setNext(handler2);
+
+        assertNull(handler1.readUser(0));
+    }
+
+    @Test
+    public void readUserOk() {
+        IReqresUser apiAuthentication = new ReqresUser();
+        IHandler handler1 = new UsersValidatorHandler();
+        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+
+        handler1.setNext(handler2);
+
+        assertEquals(User.class, handler1.readUser(1).getClass());
+    }
+
+    @Test
+    public void updateWithNullId() throws InvalidUserException {
+        IReqresUser apiAuthentication = new ReqresUser();
+        IHandler handler1 = new UsersValidatorHandler();
+        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+
+        handler1.setNext(handler2);
+
+        User user = UserFactory.createUser(null, "email@email.com", "firstName", "lastName", "avatar");
+
+        assertFalse(handler1.updateUser(null, user));
+    }
+
+    @Test
+    public void updateWithInvalidId() throws InvalidUserException {
+        IReqresUser apiAuthentication = new ReqresUser();
+        IHandler handler1 = new UsersValidatorHandler();
+        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+
+        handler1.setNext(handler2);
+
+        User user = UserFactory.createUser(null, "email@email.com", "firstName", "lastName", "avatar");
+        assertFalse(handler1.updateUser(0, user));
+    }
+
+    @Test
+    public void updateWithNullUser() throws InvalidUserException {
+        IReqresUser apiAuthentication = new ReqresUser();
+        IHandler handler1 = new UsersValidatorHandler();
+        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+
+        handler1.setNext(handler2);
+
+        assertFalse(handler1.updateUser(1, null));
+    }
+
+    @Test
+    public void updateUserOk() throws InvalidUserException {
+        IReqresUser apiAuthentication = new ReqresUser();
+        IHandler handler1 = new UsersValidatorHandler();
+        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+
+        handler1.setNext(handler2);
+
+        User user = UserFactory.createUser(null, "email@email.com", "firstName", "lastName", "avatar");
+        assertTrue(handler1.updateUser(1, user));
+    }
+
+    @Test
+    public void deleteWithNullId() throws InvalidUserException {
+        IReqresUser apiAuthentication = new ReqresUser();
+        IHandler handler1 = new UsersValidatorHandler();
+        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+
+        handler1.setNext(handler2);
+
+        assertFalse(handler1.deleteUser(null));
+    }
+
+    @Test
+    public void deleteWithInvalidId() throws InvalidUserException {
+        IReqresUser apiAuthentication = new ReqresUser();
+        IHandler handler1 = new UsersValidatorHandler();
+        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+
+        handler1.setNext(handler2);
+
+        assertFalse(handler1.deleteUser(0));
+    }
+
+    @Test
+    public void deleteUserOk() throws InvalidUserException {
+        IReqresUser apiAuthentication = new ReqresUser();
+        IHandler handler1 = new UsersValidatorHandler();
+        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+
+        handler1.setNext(handler2);
+
+        assertTrue(handler1.deleteUser(1));
     }
 }
