@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.brenosalles.handlers.AbstractHandler;
 import com.brenosalles.reqres.api.IReqresUser;
+import com.brenosalles.users.InvalidUserException;
 import com.brenosalles.users.User;
 
 public class UsersRequestHandler extends AbstractHandler {
@@ -17,24 +18,29 @@ public class UsersRequestHandler extends AbstractHandler {
 
     @Override
     public User createUser(User user) {
-        User res = apiUser.createUser(user);
-        return res != null ? res : super.createUser(user);
+        try {
+            return apiUser.createUser(user);
+        } catch (InvalidUserException e) {
+            return super.createUser(user);
+        }
     }
 
     @Override
     public ArrayList<User> readUsers() {
-        ArrayList<User> resources = apiUser.readUsers();
-        if (resources.size() != 0) {
-            return resources;
+        try {
+            return apiUser.readUsers();
+        } catch (InvalidUserException e) {
+            return super.readUsers();
         }
-        return super.readUsers();
     }
 
     @Override
     public User readUser(Integer id) {
-        User resource = apiUser.readUser(id);
-
-        return resource != null ? resource : super.readUser(id);
+        try {
+            return apiUser.readUser(id);
+        } catch (InvalidUserException e) {
+            return super.readUser(id);
+        }
     }
 
     @Override

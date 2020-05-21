@@ -3,12 +3,13 @@ package com.brenosalles.reqres.api.stubs;
 import java.util.ArrayList;
 
 import com.brenosalles.reqres.api.IReqresResource;
+import com.brenosalles.resources.InvalidResourceException;
 import com.brenosalles.resources.Resource;
 import com.brenosalles.resources.ResourceFactory;
 
 public class ReqresResource implements IReqresResource {
     @Override
-    public ArrayList<Resource> readResources() {
+    public ArrayList<Resource> readResources() throws InvalidResourceException {
         ArrayList<Resource> arr = new ArrayList<Resource>();
         for (Integer i = 1; i < 5; i++) {
             arr.add(ResourceFactory.createResource(i, i + "Name", 2000 + i, "#12345" + i, "17-203" + i));
@@ -17,7 +18,7 @@ public class ReqresResource implements IReqresResource {
     }
 
     @Override
-    public Resource readResource(Integer id) {
+    public Resource readResource(Integer id) throws InvalidResourceException {
         if (id == 0) {
             return null;
         }
