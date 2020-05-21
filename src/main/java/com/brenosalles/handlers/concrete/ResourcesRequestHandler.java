@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.brenosalles.handlers.AbstractHandler;
 import com.brenosalles.reqres.api.IReqresResource;
+import com.brenosalles.resources.InvalidResourceException;
 import com.brenosalles.resources.Resource;
 
 public class ResourcesRequestHandler extends AbstractHandler {
@@ -17,24 +18,29 @@ public class ResourcesRequestHandler extends AbstractHandler {
 
     @Override
     public Resource createResource(Resource resource) {
-        Resource res = apiResource.createResource(resource);
-        return res != null ? res : super.createResource(resource);
+        try {
+            return apiResource.createResource(resource);
+        } catch (InvalidResourceException e) {
+            return super.createResource(resource);
+        }
     }
 
     @Override
     public ArrayList<Resource> readResources() {
-        ArrayList<Resource> resources = apiResource.readResources();
-        if (resources.size() != 0) {
-            return resources;
+        try {
+            return apiResource.readResources();
+        } catch (InvalidResourceException e) {
+            return super.readResources();
         }
-        return super.readResources();
     }
 
     @Override
     public Resource readResource(Integer id) {
-        Resource resource = apiResource.readResource(id);
-
-        return resource != null ? resource : super.readResource(id);
+        try {
+            return apiResource.readResource(id);
+        } catch (InvalidResourceException e) {
+            return super.readResource(id);
+        }
     }
 
     @Override

@@ -14,8 +14,10 @@ import com.brenosalles.reqres.cache.ITokensCache;
 import com.brenosalles.reqres.cache.exceptions.InvalidToken;
 import com.brenosalles.reqres.cache.exceptions.TokenNotFound;
 import com.brenosalles.reqres.cache.mocks.TokensCacheRepository;
+import com.brenosalles.tokens.InvalidTokenException;
 import com.brenosalles.tokens.Token;
 import com.brenosalles.tokens.TokenFactory;
+import com.brenosalles.users.InvalidUserException;
 import com.brenosalles.users.User;
 import com.brenosalles.users.UserFactory;
 
@@ -35,26 +37,26 @@ public class AuthenticationUnitTest {
     }
 
     @Test
-    public void registerWithNullPassword() {
+    public void registerWithNullPassword() throws InvalidUserException {
         IReqresAuthentication apiAuthentication = new ReqresAuthentication();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
         handler1.setNext(handler2);
 
-        User user = UserFactory.createUser(1, "email", "firstName", "lastName", "avatar");
+        User user = UserFactory.createUser(1, "email@email.com", "firstName", "lastName", "avatar");
         assertNull(handler1.register(user, null));
     }
 
     @Test
-    public void registerWithLowerPassword() {
+    public void registerWithLowerPassword() throws InvalidUserException {
         IReqresAuthentication apiAuthentication = new ReqresAuthentication();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
         handler1.setNext(handler2);
 
-        User user = UserFactory.createUser(1, "email", "firstName", "lastName", "avatar");
+        User user = UserFactory.createUser(1, "email@email.com", "firstName", "lastName", "avatar");
         String password = "";
         for (int i = 0; i < 7; i++) {
             password += "a";
@@ -64,14 +66,14 @@ public class AuthenticationUnitTest {
     }
 
     @Test
-    public void registerWithHigherPassword() {
+    public void registerWithHigherPassword() throws InvalidUserException {
         IReqresAuthentication apiAuthentication = new ReqresAuthentication();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
         handler1.setNext(handler2);
 
-        User user = UserFactory.createUser(1, "email", "firstName", "lastName", "avatar");
+        User user = UserFactory.createUser(1, "email@email.com", "firstName", "lastName", "avatar");
         String password = "";
         for (int i = 0; i < 129; i++) {
             password += "a";
@@ -81,14 +83,14 @@ public class AuthenticationUnitTest {
     }
 
     @Test
-    public void registerOk() {
+    public void registerOk() throws InvalidUserException {
         IReqresAuthentication apiAuthentication = new ReqresAuthentication();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
         handler1.setNext(handler2);
 
-        User user = UserFactory.createUser(1, "email", "firstName", "lastName", "avatar");
+        User user = UserFactory.createUser(1, "email@email.com", "firstName", "lastName", "avatar");
         String password = "";
         for (int i = 0; i < 64; i++) {
             password += "a";
@@ -110,26 +112,26 @@ public class AuthenticationUnitTest {
     }
 
     @Test
-    public void loginWithNullPassword() {
+    public void loginWithNullPassword() throws InvalidUserException {
         IReqresAuthentication apiAuthentication = new ReqresAuthentication();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
         handler1.setNext(handler2);
 
-        User user = UserFactory.createUser(1, "email", "firstName", "lastName", "avatar");
+        User user = UserFactory.createUser(1, "email@email.com", "firstName", "lastName", "avatar");
         assertNull(handler1.login(user, null));
     }
 
     @Test
-    public void loginWithLowerPassword() {
+    public void loginWithLowerPassword() throws InvalidUserException {
         IReqresAuthentication apiAuthentication = new ReqresAuthentication();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
         handler1.setNext(handler2);
 
-        User user = UserFactory.createUser(1, "email", "firstName", "lastName", "avatar");
+        User user = UserFactory.createUser(1, "email@email.com", "firstName", "lastName", "avatar");
         String password = "";
         for (int i = 0; i < 7; i++) {
             password += "a";
@@ -139,14 +141,14 @@ public class AuthenticationUnitTest {
     }
 
     @Test
-    public void loginWithHigherPassword() {
+    public void loginWithHigherPassword() throws InvalidUserException {
         IReqresAuthentication apiAuthentication = new ReqresAuthentication();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
         handler1.setNext(handler2);
 
-        User user = UserFactory.createUser(1, "email", "firstName", "lastName", "avatar");
+        User user = UserFactory.createUser(1, "email@email.com", "firstName", "lastName", "avatar");
         String password = "";
         for (int i = 0; i < 129; i++) {
             password += "a";
@@ -156,14 +158,14 @@ public class AuthenticationUnitTest {
     }
 
     @Test
-    public void loginOk() {
+    public void loginOk() throws InvalidUserException {
         IReqresAuthentication apiAuthentication = new ReqresAuthentication();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
         handler1.setNext(handler2);
 
-        User user = UserFactory.createUser(1, "email", "firstName", "lastName", "avatar");
+        User user = UserFactory.createUser(1, "email@email.com", "firstName", "lastName", "avatar");
         String password = "";
         for (int i = 0; i < 64; i++) {
             password += "a";
@@ -173,21 +175,21 @@ public class AuthenticationUnitTest {
     }
 
     @Test
-    public void getUnexistentToken() throws InvalidToken {
+    public void getUnexistentToken() throws InvalidToken, InvalidUserException, InvalidTokenException {
         ITokensCache cache = new TokensCacheRepository();
-        User user = UserFactory.createUser(1, "email", "firstName", "lastName", "avatar");
+        User user = UserFactory.createUser(1, "email@email.com", "firstName", "lastName", "avatar");
         Token token = TokenFactory.createToken(user, "this is a random token");
         cache.addToken(token);
 
         assertThrows(TokenNotFound.class, () -> {
-            cache.getToken(UserFactory.createUser(2, "email", "firstName", "lastName", "avatar"));
+            cache.getToken(UserFactory.createUser(2, "email@email.com", "firstName", "lastName", "avatar"));
         });
     }
 
     @Test
-    public void getValidToken() throws InvalidToken, TokenNotFound {
+    public void getValidToken() throws InvalidToken, TokenNotFound, InvalidUserException, InvalidTokenException {
         ITokensCache cache = new TokensCacheRepository();
-        User user = UserFactory.createUser(1, "email", "firstName", "lastName", "avatar");
+        User user = UserFactory.createUser(1, "email@email.com", "firstName", "lastName", "avatar");
         Token token = TokenFactory.createToken(user, "this is a random token");
 
         cache.addToken(token);
@@ -205,9 +207,9 @@ public class AuthenticationUnitTest {
     }
 
     @Test
-    public void addValidToken() throws InvalidToken, TokenNotFound {
+    public void addValidToken() throws InvalidToken, TokenNotFound, InvalidUserException, InvalidTokenException {
         ITokensCache cache = new TokensCacheRepository();
-        User user = UserFactory.createUser(1, "email", "firstName", "lastName", "avatar");
+        User user = UserFactory.createUser(1, "email@email.com", "firstName", "lastName", "avatar");
         Token token = TokenFactory.createToken(user, "this is a random token");
 
         cache.addToken(token);

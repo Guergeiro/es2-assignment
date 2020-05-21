@@ -4,8 +4,10 @@ import com.brenosalles.reqres.api.IReqresAuthentication;
 import com.brenosalles.reqres.http.HttpMethods;
 import com.brenosalles.reqres.http.Request;
 import com.brenosalles.reqres.http.Response;
+import com.brenosalles.tokens.InvalidTokenException;
 import com.brenosalles.tokens.Token;
 import com.brenosalles.tokens.TokenFactory;
+import com.brenosalles.users.InvalidUserException;
 import com.brenosalles.users.User;
 
 import org.json.simple.JSONObject;
@@ -15,7 +17,7 @@ import org.json.simple.parser.ParseException;
 public class ReqresAuthentication implements IReqresAuthentication {
     @Override
     @SuppressWarnings("unchecked")
-    public Token register(User user, String password) {
+    public Token register(User user, String password) throws InvalidUserException, InvalidTokenException {
         JSONObject obj = new JSONObject();
         obj.put("email", user.getEmail());
         obj.put("password", password);
@@ -38,7 +40,7 @@ public class ReqresAuthentication implements IReqresAuthentication {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Token login(User user, String password) {
+    public Token login(User user, String password) throws InvalidUserException, InvalidTokenException {
         JSONObject obj = new JSONObject();
         obj.put("email", user.getEmail());
         obj.put("password", password);

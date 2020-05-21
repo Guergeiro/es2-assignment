@@ -6,6 +6,7 @@ import com.brenosalles.reqres.api.IReqresUser;
 import com.brenosalles.reqres.http.HttpMethods;
 import com.brenosalles.reqres.http.Request;
 import com.brenosalles.reqres.http.Response;
+import com.brenosalles.users.InvalidUserException;
 import com.brenosalles.users.User;
 import com.brenosalles.users.UserFactory;
 
@@ -35,7 +36,7 @@ public class ReqresUser implements IReqresUser {
     }
 
     @Override
-    public User readUser(Integer id) {
+    public User readUser(Integer id) throws InvalidUserException {
         Response response = Request.makeHttpRequest("https://reqres.in/api/users/" + id, HttpMethods.GET, null);
         if (response.getStatusCode() < 400) {
             JSONParser parser = new JSONParser();
@@ -54,7 +55,7 @@ public class ReqresUser implements IReqresUser {
 
     @Override
     @SuppressWarnings("unchecked")
-    public User createUser(User user) {
+    public User createUser(User user) throws InvalidUserException {
         JSONObject obj = new JSONObject();
         obj.put("email", user.getEmail());
         obj.put("first_name", user.getFirstName());

@@ -6,6 +6,7 @@ import com.brenosalles.reqres.api.IReqresResource;
 import com.brenosalles.reqres.http.HttpMethods;
 import com.brenosalles.reqres.http.Request;
 import com.brenosalles.reqres.http.Response;
+import com.brenosalles.resources.InvalidResourceException;
 import com.brenosalles.resources.Resource;
 import com.brenosalles.resources.ResourceFactory;
 
@@ -35,7 +36,7 @@ public class ReqresResource implements IReqresResource {
     }
 
     @Override
-    public Resource readResource(Integer id) {
+    public Resource readResource(Integer id) throws InvalidResourceException {
         Response response = Request.makeHttpRequest("https://reqres.in/api/resources/" + id, HttpMethods.GET, null);
         if (response.getStatusCode() < 400) {
             JSONParser parser = new JSONParser();
@@ -54,7 +55,7 @@ public class ReqresResource implements IReqresResource {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Resource createResource(Resource resource) {
+    public Resource createResource(Resource resource) throws InvalidResourceException {
         JSONObject obj = new JSONObject();
         obj.put("name", resource.getName());
         obj.put("year", resource.getYear());

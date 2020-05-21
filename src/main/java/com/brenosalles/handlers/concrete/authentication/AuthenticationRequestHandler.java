@@ -2,7 +2,9 @@ package com.brenosalles.handlers.concrete.authentication;
 
 import com.brenosalles.handlers.AbstractHandler;
 import com.brenosalles.reqres.api.IReqresAuthentication;
+import com.brenosalles.tokens.InvalidTokenException;
 import com.brenosalles.tokens.Token;
+import com.brenosalles.users.InvalidUserException;
 import com.brenosalles.users.User;
 
 public class AuthenticationRequestHandler extends AbstractHandler {
@@ -16,19 +18,19 @@ public class AuthenticationRequestHandler extends AbstractHandler {
 
     @Override
     public Token register(User user, String password) {
-        Token token = apiAuthentication.register(user, password);
-        if (token == null) {
+        try {
+            return apiAuthentication.register(user, password);
+        } catch (InvalidUserException | InvalidTokenException e) {
             return super.register(user, password);
         }
-        return token;
     }
 
     @Override
     public Token login(User user, String password) {
-        Token token = apiAuthentication.login(user, password);
-        if (token == null) {
+        try {
+            return apiAuthentication.login(user, password);
+        } catch (InvalidUserException | InvalidTokenException e) {
             return super.login(user, password);
         }
-        return token;
     }
 }

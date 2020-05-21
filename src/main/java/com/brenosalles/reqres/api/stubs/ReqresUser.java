@@ -3,12 +3,13 @@ package com.brenosalles.reqres.api.stubs;
 import java.util.ArrayList;
 
 import com.brenosalles.reqres.api.IReqresUser;
+import com.brenosalles.users.InvalidUserException;
 import com.brenosalles.users.User;
 import com.brenosalles.users.UserFactory;
 
 public class ReqresUser implements IReqresUser {
     @Override
-    public ArrayList<User> readUsers() {
+    public ArrayList<User> readUsers() throws InvalidUserException {
         ArrayList<User> arr = new ArrayList<User>();
         for (Integer i = 1; i < 5; i++) {
             arr.add(UserFactory.createUser(i, i + "@email.com", i + "FName", i + "LName", "https://" + i + ".com"));
@@ -17,7 +18,7 @@ public class ReqresUser implements IReqresUser {
     }
 
     @Override
-    public User readUser(Integer id) {
+    public User readUser(Integer id) throws InvalidUserException {
         if (id == 0) {
             return null;
         }
