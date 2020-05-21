@@ -1,22 +1,13 @@
 package com.brenosalles;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.brenosalles.handlers.IHandler;
 import com.brenosalles.handlers.concrete.authentication.AuthenticationRequestHandler;
 import com.brenosalles.handlers.concrete.authentication.AuthenticationValidatorHandler;
 import com.brenosalles.reqres.api.IReqresAuthentication;
 import com.brenosalles.reqres.api.stubs.ReqresAuthentication;
-import com.brenosalles.reqres.cache.ITokensCache;
-import com.brenosalles.reqres.cache.exceptions.InvalidToken;
-import com.brenosalles.reqres.cache.exceptions.TokenNotFound;
-import com.brenosalles.reqres.cache.mocks.TokensCacheRepository;
-import com.brenosalles.tokens.InvalidTokenException;
-import com.brenosalles.tokens.Token;
-import com.brenosalles.tokens.TokenFactory;
 import com.brenosalles.users.InvalidUserException;
 import com.brenosalles.users.User;
 import com.brenosalles.users.UserFactory;
@@ -172,48 +163,5 @@ public class AuthenticationUnitTest {
         }
 
         assertNotNull(handler1.login(user, password));
-    }
-
-    @Test
-    public void getUnexistentToken() throws InvalidToken, InvalidUserException, InvalidTokenException {
-        ITokensCache cache = new TokensCacheRepository();
-        User user = UserFactory.createUser(1, "email@email.com", "firstName", "lastName", "avatar");
-        Token token = TokenFactory.createToken(user, "this is a random token");
-        cache.addToken(token);
-
-        assertThrows(TokenNotFound.class, () -> {
-            cache.getToken(UserFactory.createUser(2, "email@email.com", "firstName", "lastName", "avatar"));
-        });
-    }
-
-    @Test
-    public void getValidToken() throws InvalidToken, TokenNotFound, InvalidUserException, InvalidTokenException {
-        ITokensCache cache = new TokensCacheRepository();
-        User user = UserFactory.createUser(1, "email@email.com", "firstName", "lastName", "avatar");
-        Token token = TokenFactory.createToken(user, "this is a random token");
-
-        cache.addToken(token);
-
-        assertEquals(token, cache.getToken(user));
-    }
-
-    @Test
-    public void addInvalidToken() {
-        ITokensCache cache = new TokensCacheRepository();
-
-        assertThrows(InvalidToken.class, () -> {
-            cache.addToken(null);
-        });
-    }
-
-    @Test
-    public void addValidToken() throws InvalidToken, TokenNotFound, InvalidUserException, InvalidTokenException {
-        ITokensCache cache = new TokensCacheRepository();
-        User user = UserFactory.createUser(1, "email@email.com", "firstName", "lastName", "avatar");
-        Token token = TokenFactory.createToken(user, "this is a random token");
-
-        cache.addToken(token);
-
-        assertEquals(token, cache.getToken(user));
     }
 }

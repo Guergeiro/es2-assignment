@@ -10,13 +10,13 @@ public class UsersCacheRepository implements IUsersCache {
     private ArrayList<User> users = new ArrayList<User>();
 
     @Override
-    public void addUser(User user) {
-        users.add(user);
+    public Boolean addUser(User user) {
+        return users.add(user);
     }
 
     @Override
-    public void addUsers(ArrayList<User> users) {
-        this.users.addAll(users);
+    public Boolean addUsers(ArrayList<User> users) {
+        return this.users.addAll(users);
     }
 
     @Override
@@ -35,20 +35,21 @@ public class UsersCacheRepository implements IUsersCache {
     }
 
     @Override
-    public void updateUser(Integer id, User user) {
+    public Boolean updateUser(Integer id, User user) {
         for (User u : users) {
             if (u.getId() == id) {
                 u.setAvatar(user.getAvatar());
                 u.setEmail(user.getEmail());
                 u.setFirstName(user.getFirstName());
                 u.setLastName(user.getLastName());
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     @Override
-    public void deleteUser(Integer id) {
-        users.removeIf(user -> user.getId() == id);
+    public Boolean deleteUser(Integer id) {
+        return users.removeIf(user -> user.getId() == id);
     }
 }
