@@ -53,7 +53,7 @@ public abstract class UserFactory {
         if (avatar.length() < 4) {
             return false;
         }
-        if (avatar.length() > 64) {
+        if (avatar.length() > 128) {
             return false;
         }
         return true;

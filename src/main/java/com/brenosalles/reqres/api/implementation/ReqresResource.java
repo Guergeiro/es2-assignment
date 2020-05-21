@@ -18,15 +18,21 @@ import org.json.simple.parser.ParseException;
 public class ReqresResource implements IReqresResource {
 
     @Override
-    @SuppressWarnings("unchecked")
-    public ArrayList<Resource> readResources() {
+    public ArrayList<Resource> readResources() throws InvalidResourceException {
         Response response = Request.makeHttpRequest("https://reqres.in/api/resources", HttpMethods.GET, null);
         if (response.getStatusCode() < 400) {
             JSONParser parser = new JSONParser();
             try {
                 JSONObject message = (JSONObject) parser.parse(response.getBody());
                 JSONArray arr = (JSONArray) message.get("data");
-                return new ArrayList<Resource>(arr);
+                ArrayList<Resource> resources = new ArrayList<Resource>();
+                for (Object resource : arr) {
+                    JSONObject obj = (JSONObject) resource;
+                    resources.add(ResourceFactory.createResource(Math.toIntExact((Long) obj.get("id")),
+                            (String) obj.get("name"), Math.toIntExact((Long) obj.get("year")),
+                            (String) obj.get("color"), (String) obj.get("pantone_value")));
+                }
+                return resources;
             } catch (ParseException e) {
                 System.out.println(e.getMessage());
             }
@@ -43,8 +49,9 @@ public class ReqresResource implements IReqresResource {
             try {
                 JSONObject message = (JSONObject) parser.parse(response.getBody());
                 JSONObject obj = (JSONObject) message.get("data");
-                return ResourceFactory.createResource((Integer) obj.get("id"), (String) obj.get("name"),
-                        (Integer) obj.get("year"), (String) obj.get("color"), (String) obj.get("pantone_value"));
+                return ResourceFactory.createResource(Math.toIntExact((Long) obj.get("id")), (String) obj.get("name"),
+                        Math.toIntExact((Long) obj.get("year")), (String) obj.get("color"),
+                        (String) obj.get("pantone_value"));
             } catch (ParseException e) {
                 System.out.println(e.getMessage());
             }
@@ -64,14 +71,14 @@ public class ReqresResource implements IReqresResource {
 
         Response response = Request.makeHttpRequest("https://reqres.in/api/resources", HttpMethods.POST,
                 obj.toJSONString());
-
+        System.out.println(response.getBody());
         if (response.getStatusCode() < 400) {
             JSONParser parser = new JSONParser();
             try {
                 JSONObject message = (JSONObject) parser.parse(response.getBody());
-                JSONObject obj2 = (JSONObject) message.get("message");
-                return ResourceFactory.createResource((Integer) obj2.get("id"), (String) obj2.get("name"),
-                        (Integer) obj2.get("year"), (String) obj2.get("color"), (String) obj2.get("pantone_value"));
+                return ResourceFactory.createResource(Integer.parseInt((String) message.get("id")),
+                        (String) message.get("name"), Math.toIntExact((Long) message.get("year")),
+                        (String) message.get("color"), (String) message.get("pantone_value"));
             } catch (ParseException e) {
                 System.out.println(e.getMessage());
             }
