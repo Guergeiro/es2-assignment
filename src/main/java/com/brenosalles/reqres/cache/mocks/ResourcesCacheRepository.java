@@ -11,13 +11,13 @@ public class ResourcesCacheRepository implements IResourcesCache {
     private ArrayList<Resource> resources = new ArrayList<Resource>();
 
     @Override
-    public void addResource(Resource resource) {
-        resources.add(resource);
+    public Boolean addResource(Resource resource) {
+        return resources.add(resource);
     }
 
     @Override
-    public void addResources(ArrayList<Resource> resources) {
-        this.resources.addAll(resources);
+    public Boolean addResources(ArrayList<Resource> resources) {
+        return this.resources.addAll(resources);
     }
 
     @Override
@@ -36,20 +36,21 @@ public class ResourcesCacheRepository implements IResourcesCache {
     }
 
     @Override
-    public void updateResource(Integer id, Resource resource) {
+    public Boolean updateResource(Integer id, Resource resource) {
         for (Resource r : resources) {
             if (r.getId() == id) {
                 r.setColor(resource.getColor());
                 r.setName(resource.getName());
                 r.setPantoneValue(resource.getPantoneValue());
                 r.setYear(resource.getYear());
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     @Override
-    public void deleteResource(Integer id) {
-        resources.removeIf(resource -> resource.getId() == id);
+    public Boolean deleteResource(Integer id) {
+        return resources.removeIf(resource -> resource.getId() == id);
     }
 }
