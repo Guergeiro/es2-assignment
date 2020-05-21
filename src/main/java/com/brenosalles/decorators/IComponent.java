@@ -14,9 +14,9 @@ public interface IComponent {
 
     User readUser(Integer id);
 
-    void updateUser(Integer id, User user);
+    Boolean updateUser(Integer id, User user);
 
-    void deleteUser(Integer id);
+    Boolean deleteUser(Integer id);
 
     Resource createResource(Resource resource);
 
@@ -24,9 +24,9 @@ public interface IComponent {
 
     Resource readResource(Integer id);
 
-    void updateResource(Integer id, Resource resource);
+    Boolean updateResource(Integer id, Resource resource);
 
-    void deleteResource(Integer id);
+    Boolean deleteResource(Integer id);
 
     Token register(User user, String password);
 

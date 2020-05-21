@@ -44,16 +44,18 @@ public class ResourcesRequestHandler extends AbstractHandler {
     }
 
     @Override
-    public void updateResource(Integer id, Resource resource) {
+    public Boolean updateResource(Integer id, Resource resource) {
         if (apiResource.updateResource(id, resource) == false) {
-            super.updateResource(id, resource);
+            return super.updateResource(id, resource);
         }
+        return true;
     }
 
     @Override
-    public void deleteResource(Integer id) {
+    public Boolean deleteResource(Integer id) {
         if (apiResource.deleteResource(id) == false) {
-            super.deleteResource(id);
+            return super.deleteResource(id);
         }
+        return true;
     }
 }

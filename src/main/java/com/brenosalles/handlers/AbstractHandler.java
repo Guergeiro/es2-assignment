@@ -42,18 +42,19 @@ public abstract class AbstractHandler implements IHandler {
     }
 
     @Override
-    public void updateUser(Integer id, User user) {
+    public Boolean updateUser(Integer id, User user) {
         if (nextHandler != null) {
-            nextHandler.updateUser(id, user);
+            return nextHandler.updateUser(id, user);
         }
-
+        return false;
     }
 
     @Override
-    public void deleteUser(Integer id) {
+    public Boolean deleteUser(Integer id) {
         if (nextHandler != null) {
-            nextHandler.deleteUser(id);
+            return nextHandler.deleteUser(id);
         }
+        return false;
     }
 
     @Override
@@ -81,17 +82,19 @@ public abstract class AbstractHandler implements IHandler {
     }
 
     @Override
-    public void updateResource(Integer id, Resource resource) {
+    public Boolean updateResource(Integer id, Resource resource) {
         if (nextHandler != null) {
-            nextHandler.updateResource(id, resource);
+            return nextHandler.updateResource(id, resource);
         }
+        return false;
     }
 
     @Override
-    public void deleteResource(Integer id) {
+    public Boolean deleteResource(Integer id) {
         if (nextHandler != null) {
-            nextHandler.deleteResource(id);
+            return nextHandler.deleteResource(id);
         }
+        return false;
     }
 
     @Override

@@ -31,13 +31,13 @@ public abstract class Decorator implements IComponent {
     }
 
     @Override
-    public void updateUser(Integer id, User user) {
-        component.updateUser(id, user);
+    public Boolean updateUser(Integer id, User user) {
+        return component.updateUser(id, user);
     }
 
     @Override
-    public void deleteUser(Integer id) {
-        component.deleteUser(id);
+    public Boolean deleteUser(Integer id) {
+        return component.deleteUser(id);
     }
 
     @Override
@@ -56,13 +56,13 @@ public abstract class Decorator implements IComponent {
     }
 
     @Override
-    public void updateResource(Integer id, Resource resource) {
-        component.updateResource(id, resource);
+    public Boolean updateResource(Integer id, Resource resource) {
+        return component.updateResource(id, resource);
     }
 
     @Override
-    public void deleteResource(Integer id) {
-        component.deleteResource(id);
+    public Boolean deleteResource(Integer id) {
+        return component.deleteResource(id);
     }
 
     @Override

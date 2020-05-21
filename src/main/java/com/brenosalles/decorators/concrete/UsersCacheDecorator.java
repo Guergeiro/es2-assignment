@@ -49,14 +49,14 @@ public class UsersCacheDecorator extends Decorator {
     }
 
     @Override
-    public void updateUser(Integer id, User user) {
+    public Boolean updateUser(Integer id, User user) {
         cache.updateUser(id, user);
-        super.updateUser(id, user);
+        return super.updateUser(id, user);
     }
 
     @Override
-    public void deleteUser(Integer id) {
+    public Boolean deleteUser(Integer id) {
         cache.deleteUser(id);
-        super.deleteUser(id);
+        return super.deleteUser(id);
     }
 }

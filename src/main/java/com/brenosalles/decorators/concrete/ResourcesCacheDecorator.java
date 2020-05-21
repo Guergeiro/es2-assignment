@@ -49,14 +49,14 @@ public class ResourcesCacheDecorator extends Decorator {
     }
 
     @Override
-    public void updateResource(Integer id, Resource resource) {
+    public Boolean updateResource(Integer id, Resource resource) {
         cache.updateResource(id, resource);
-        super.updateResource(id, resource);
+        return super.updateResource(id, resource);
     }
 
     @Override
-    public void deleteResource(Integer id) {
+    public Boolean deleteResource(Integer id) {
         cache.deleteResource(id);
-        super.deleteResource(id);
+        return super.deleteResource(id);
     }
 }

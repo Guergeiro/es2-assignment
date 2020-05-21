@@ -44,16 +44,18 @@ public class UsersRequestHandler extends AbstractHandler {
     }
 
     @Override
-    public void updateUser(Integer id, User resource) {
+    public Boolean updateUser(Integer id, User resource) {
         if (apiUser.updateUser(id, resource) == false) {
-            super.updateUser(id, resource);
+            return super.updateUser(id, resource);
         }
+        return true;
     }
 
     @Override
-    public void deleteUser(Integer id) {
+    public Boolean deleteUser(Integer id) {
         if (apiUser.deleteUser(id) == false) {
-            super.deleteUser(id);
+            return super.deleteUser(id);
         }
+        return true;
     }
 }

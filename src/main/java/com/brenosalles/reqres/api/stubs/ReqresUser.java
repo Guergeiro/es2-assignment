@@ -19,7 +19,7 @@ public class ReqresUser implements IReqresUser {
 
     @Override
     public User readUser(Integer id) throws InvalidUserException {
-        if (id == 0) {
+        if (id < 1) {
             return null;
         }
         return UserFactory.createUser(id, id + "@email.com", id + "FName", id + "LName", "https://" + id + ".com");
@@ -36,7 +36,7 @@ public class ReqresUser implements IReqresUser {
 
     @Override
     public Boolean updateUser(Integer id, User user) {
-        if (id == 0) {
+        if (id < 1) {
             return false;
         }
         if (user.getId() != null) {
@@ -47,7 +47,7 @@ public class ReqresUser implements IReqresUser {
 
     @Override
     public Boolean deleteUser(Integer id) {
-        if (id == 0) {
+        if (id < 1) {
             return false;
         }
         return true;

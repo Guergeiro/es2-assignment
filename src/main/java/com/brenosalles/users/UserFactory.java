@@ -28,7 +28,6 @@ public abstract class UserFactory {
         if (email == null) {
             return false;
         }
-        System.out.println(email.matches("^.*@.*\\..*$"));
         return email.matches("^.*@.*\\..*$");
     }
 
