@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.brenosalles.decorators.Decorator;
 import com.brenosalles.decorators.IComponent;
 import com.brenosalles.reqres.cache.IResourcesCache;
-import com.brenosalles.reqres.cache.exceptions.ResourceNotFound;
+import com.brenosalles.reqres.cache.exceptions.ResourceNotFoundException;
 import com.brenosalles.resources.Resource;
 
 public class ResourcesCacheDecorator extends Decorator {
@@ -41,7 +41,7 @@ public class ResourcesCacheDecorator extends Decorator {
     public Resource readResource(Integer id) {
         try {
             return cache.getResource(id);
-        } catch (ResourceNotFound e) {
+        } catch (ResourceNotFoundException e) {
             Resource resource = super.readResource(id);
             cache.addResource(resource);
             return resource;

@@ -6,13 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import com.brenosalles.decorators.IComponent;
+import com.brenosalles.decorators.concrete.ResourcesCacheDecorator;
 import com.brenosalles.handlers.IHandler;
 import com.brenosalles.handlers.concrete.resources.ResourcesRequestHandler;
 import com.brenosalles.handlers.concrete.resources.ResourcesValidatorHandler;
 import com.brenosalles.reqres.api.IReqresResource;
 import com.brenosalles.reqres.api.stubs.ReqresResourceStub;
+import com.brenosalles.reqres.cache.implementation.ResourcesCacheRepository;
 import com.brenosalles.resources.InvalidResourceException;
 import com.brenosalles.resources.Resource;
 import com.brenosalles.resources.ResourceFactory;
@@ -207,5 +211,204 @@ public class ResourceUnitTest {
         handler1.setNext(handler2);
 
         assertTrue(handler1.deleteResource(1));
+    }
+
+    @Test
+    public void readResourceInCacheInvalidId() throws InvalidResourceException, NoSuchFieldException, SecurityException,
+            IllegalArgumentException, IllegalAccessException {
+        IReqresResource apiResource = new ReqresResourceStub();
+        IHandler handler1 = new ResourcesValidatorHandler();
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
+
+        handler1.setNext(handler2);
+
+        IComponent finalImplementation = new ResourcesCacheDecorator(handler1, new ResourcesCacheRepository());
+
+        // Access private cache
+        Field f1 = finalImplementation.getClass().getDeclaredField("cache");
+        f1.setAccessible(true);
+        ResourcesCacheRepository cache = (ResourcesCacheRepository) f1.get(finalImplementation);
+
+        // Access private cache ArrayList
+        Field f2 = cache.getClass().getDeclaredField("resources");
+        f2.setAccessible(true);
+        ArrayList<Resource> resources = (ArrayList<Resource>) f2.get(cache);
+
+        Resource originalResource = ResourceFactory.createResource(1, "name", 2000, "#123123", "pantoneValue");
+        resources.add(originalResource);
+
+        assertNull(finalImplementation.readResource(0));
+    }
+
+    @Test
+    public void readResourceInCacheOk() throws InvalidResourceException, NoSuchFieldException, SecurityException,
+            IllegalArgumentException, IllegalAccessException {
+        IReqresResource apiResource = new ReqresResourceStub();
+        IHandler handler1 = new ResourcesValidatorHandler();
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
+
+        handler1.setNext(handler2);
+
+        IComponent finalImplementation = new ResourcesCacheDecorator(handler1, new ResourcesCacheRepository());
+
+        // Access private cache
+        Field f1 = finalImplementation.getClass().getDeclaredField("cache");
+        f1.setAccessible(true);
+        ResourcesCacheRepository cache = (ResourcesCacheRepository) f1.get(finalImplementation);
+
+        // Access private cache ArrayList
+        Field f2 = cache.getClass().getDeclaredField("resources");
+        f2.setAccessible(true);
+        ArrayList<Resource> resources = (ArrayList<Resource>) f2.get(cache);
+
+        Resource originalResource = ResourceFactory.createResource(1, "name", 2000, "#123123", "pantoneValue");
+        resources.add(originalResource);
+
+        assertEquals(originalResource, finalImplementation.readResource(1));
+    }
+
+    @Test
+    public void createResourceInCacheOk() throws InvalidResourceException, NoSuchFieldException, SecurityException,
+            IllegalArgumentException, IllegalAccessException {
+        IReqresResource apiResource = new ReqresResourceStub();
+        IHandler handler1 = new ResourcesValidatorHandler();
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
+
+        handler1.setNext(handler2);
+
+        IComponent finalImplementation = new ResourcesCacheDecorator(handler1, new ResourcesCacheRepository());
+
+        // Access private cache
+        Field f1 = finalImplementation.getClass().getDeclaredField("cache");
+        f1.setAccessible(true);
+        ResourcesCacheRepository cache = (ResourcesCacheRepository) f1.get(finalImplementation);
+
+        // Access private cache ArrayList
+        Field f2 = cache.getClass().getDeclaredField("resources");
+        f2.setAccessible(true);
+        ArrayList<Resource> resources = (ArrayList<Resource>) f2.get(cache);
+        Integer originalSize = resources.size();
+
+        Resource originalResource = ResourceFactory.createResource(null, "name", 2000, "#123123", "pantoneValue");
+        originalResource.setId(finalImplementation.createResource(originalResource).getId());
+
+        assertTrue(resources.contains(originalResource));
+        assertEquals(originalSize + 1, finalImplementation.readResources().size());
+    }
+
+    @Test
+    public void updateResourceInCacheInvalidId() throws InvalidResourceException, NoSuchFieldException,
+            SecurityException, IllegalArgumentException, IllegalAccessException {
+        IReqresResource apiResource = new ReqresResourceStub();
+        IHandler handler1 = new ResourcesValidatorHandler();
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
+
+        handler1.setNext(handler2);
+
+        IComponent finalImplementation = new ResourcesCacheDecorator(handler1, new ResourcesCacheRepository());
+
+        // Access private cache
+        Field f1 = finalImplementation.getClass().getDeclaredField("cache");
+        f1.setAccessible(true);
+        ResourcesCacheRepository cache = (ResourcesCacheRepository) f1.get(finalImplementation);
+
+        // Access private cache ArrayList
+        Field f2 = cache.getClass().getDeclaredField("resources");
+        f2.setAccessible(true);
+        ArrayList<Resource> resources = (ArrayList<Resource>) f2.get(cache);
+
+        // Create a resource for update
+        Resource originalResource = ResourceFactory.createResource(1, "name", 2000, "#123123", "pantoneValue");
+        resources.add(originalResource);
+
+        Resource newResource = ResourceFactory.createResource(1, "name", 2000, "#321123", "pantoneValue");
+        assertFalse(finalImplementation.updateResource(0, newResource));
+    }
+
+    @Test
+    public void updateResourceInCacheOk() throws InvalidResourceException, NoSuchFieldException, SecurityException,
+            IllegalArgumentException, IllegalAccessException {
+        IReqresResource apiResource = new ReqresResourceStub();
+        IHandler handler1 = new ResourcesValidatorHandler();
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
+
+        handler1.setNext(handler2);
+
+        IComponent finalImplementation = new ResourcesCacheDecorator(handler1, new ResourcesCacheRepository());
+
+        // Access private cache
+        Field f1 = finalImplementation.getClass().getDeclaredField("cache");
+        f1.setAccessible(true);
+        ResourcesCacheRepository cache = (ResourcesCacheRepository) f1.get(finalImplementation);
+
+        // Access private cache ArrayList
+        Field f2 = cache.getClass().getDeclaredField("resources");
+        f2.setAccessible(true);
+        ArrayList<Resource> resources = (ArrayList<Resource>) f2.get(cache);
+
+        // Create a resource for update
+        Resource originalResource = ResourceFactory.createResource(1, "name", 2000, "#123123", "pantoneValue");
+        resources.add(originalResource);
+
+        Resource newResource = ResourceFactory.createResource(null, "name", 2000, "#321123", "pantoneValue");
+        assertTrue(finalImplementation.updateResource(originalResource.getId(), newResource));
+        assertTrue(resources.contains(originalResource));
+    }
+
+    @Test
+    public void deleteResourceInCacheInvalidId() throws InvalidResourceException, NoSuchFieldException,
+            SecurityException, IllegalArgumentException, IllegalAccessException {
+        IReqresResource apiResource = new ReqresResourceStub();
+        IHandler handler1 = new ResourcesValidatorHandler();
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
+
+        handler1.setNext(handler2);
+
+        IComponent finalImplementation = new ResourcesCacheDecorator(handler1, new ResourcesCacheRepository());
+
+        // Access private cache
+        Field f1 = finalImplementation.getClass().getDeclaredField("cache");
+        f1.setAccessible(true);
+        ResourcesCacheRepository cache = (ResourcesCacheRepository) f1.get(finalImplementation);
+
+        // Access private cache ArrayList
+        Field f2 = cache.getClass().getDeclaredField("resources");
+        f2.setAccessible(true);
+        ArrayList<Resource> resources = (ArrayList<Resource>) f2.get(cache);
+
+        // Create a resource for delete
+        Resource originalResource = ResourceFactory.createResource(1, "name", 2000, "#123123", "pantoneValue");
+        resources.add(originalResource);
+
+        assertFalse(finalImplementation.deleteResource(0));
+    }
+
+    @Test
+    public void deleteResourceInCacheOk() throws InvalidResourceException, NoSuchFieldException, SecurityException,
+            IllegalArgumentException, IllegalAccessException {
+        IReqresResource apiResource = new ReqresResourceStub();
+        IHandler handler1 = new ResourcesValidatorHandler();
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
+
+        handler1.setNext(handler2);
+
+        IComponent finalImplementation = new ResourcesCacheDecorator(handler1, new ResourcesCacheRepository());
+
+        // Access private cache
+        Field f1 = finalImplementation.getClass().getDeclaredField("cache");
+        f1.setAccessible(true);
+        ResourcesCacheRepository cache = (ResourcesCacheRepository) f1.get(finalImplementation);
+
+        // Access private cache ArrayList
+        Field f2 = cache.getClass().getDeclaredField("resources");
+        f2.setAccessible(true);
+        ArrayList<Resource> resources = (ArrayList<Resource>) f2.get(cache);
+
+        // Create a resource for update
+        Resource originalResource = ResourceFactory.createResource(1, "name", 2000, "#123123", "pantoneValue");
+        resources.add(originalResource);
+
+        assertTrue(finalImplementation.deleteResource(originalResource.getId()));
+        assertFalse(resources.contains(originalResource));
     }
 }
