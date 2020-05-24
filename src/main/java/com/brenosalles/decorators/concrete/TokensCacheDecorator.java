@@ -3,7 +3,7 @@ package com.brenosalles.decorators.concrete;
 import com.brenosalles.decorators.Decorator;
 import com.brenosalles.decorators.IComponent;
 import com.brenosalles.reqres.cache.ITokensCache;
-import com.brenosalles.reqres.cache.exceptions.InvalidToken;
+import com.brenosalles.reqres.cache.exceptions.InvalidTokenException;
 import com.brenosalles.tokens.Token;
 import com.brenosalles.users.User;
 
@@ -23,7 +23,7 @@ public class TokensCacheDecorator extends Decorator {
 
         try {
             cache.addToken(token);
-        } catch (InvalidToken e) {
+        } catch (InvalidTokenException e) {
             System.out.println(e.getMessage());
         }
 
@@ -35,7 +35,7 @@ public class TokensCacheDecorator extends Decorator {
         Token token = super.login(user, password);
         try {
             cache.addToken(token);
-        } catch (InvalidToken e) {
+        } catch (InvalidTokenException e) {
             System.out.println(e.getMessage());
         }
         return token;

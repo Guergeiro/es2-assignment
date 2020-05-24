@@ -2,7 +2,7 @@ package com.brenosalles.reqres.cache;
 
 import java.util.ArrayList;
 
-import com.brenosalles.reqres.cache.exceptions.ResourceNotFound;
+import com.brenosalles.reqres.cache.exceptions.ResourceNotFoundException;
 import com.brenosalles.resources.Resource;
 
 public interface IResourcesCache {
@@ -10,7 +10,7 @@ public interface IResourcesCache {
 
     Boolean addResources(ArrayList<Resource> resources);
 
-    Resource getResource(Integer id) throws ResourceNotFound;
+    Resource getResource(Integer id) throws ResourceNotFoundException;
 
     ArrayList<Resource> getResources();
 

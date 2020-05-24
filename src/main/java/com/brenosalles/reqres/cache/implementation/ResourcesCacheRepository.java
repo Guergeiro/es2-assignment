@@ -3,7 +3,7 @@ package com.brenosalles.reqres.cache.implementation;
 import java.util.ArrayList;
 
 import com.brenosalles.reqres.cache.IResourcesCache;
-import com.brenosalles.reqres.cache.exceptions.ResourceNotFound;
+import com.brenosalles.reqres.cache.exceptions.ResourceNotFoundException;
 import com.brenosalles.resources.Resource;
 
 public class ResourcesCacheRepository implements IResourcesCache {
@@ -21,13 +21,13 @@ public class ResourcesCacheRepository implements IResourcesCache {
     }
 
     @Override
-    public Resource getResource(Integer id) throws ResourceNotFound {
+    public Resource getResource(Integer id) throws ResourceNotFoundException {
         for (Resource resource : resources) {
             if (resource.getId() == id) {
                 return resource;
             }
         }
-        throw new ResourceNotFound();
+        throw new ResourceNotFoundException();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.brenosalles.reqres.cache.exceptions;
 
-public class TokenNotFound extends Exception {
+public class TokenNotFoundException extends Exception {
 
     /**
      *

@@ -1,6 +1,6 @@
 package com.brenosalles.reqres.cache.exceptions;
 
-public class InvalidToken extends Exception {
+public class InvalidTokenException extends Exception {
 
     /**
      *
