@@ -1,4 +1,4 @@
-package com.brenosalles.reqres.cache.mocks;
+package com.brenosalles.reqres.cache.implementation;
 
 import java.util.ArrayList;
 

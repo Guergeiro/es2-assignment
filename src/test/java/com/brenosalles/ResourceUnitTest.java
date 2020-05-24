@@ -12,7 +12,7 @@ import com.brenosalles.handlers.IHandler;
 import com.brenosalles.handlers.concrete.resources.ResourcesRequestHandler;
 import com.brenosalles.handlers.concrete.resources.ResourcesValidatorHandler;
 import com.brenosalles.reqres.api.IReqresResource;
-import com.brenosalles.reqres.api.stubs.ReqresResource;
+import com.brenosalles.reqres.api.stubs.ReqresResourceStub;
 import com.brenosalles.resources.InvalidResourceException;
 import com.brenosalles.resources.Resource;
 import com.brenosalles.resources.ResourceFactory;
@@ -86,9 +86,9 @@ public class ResourceUnitTest {
 
     @Test
     public void readResourcesOk() {
-        IReqresResource apiAuthentication = new ReqresResource();
+        IReqresResource apiResource = new ReqresResourceStub();
         IHandler handler1 = new ResourcesValidatorHandler();
-        IHandler handler2 = new ResourcesRequestHandler(apiAuthentication);
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
         handler1.setNext(handler2);
 
@@ -97,9 +97,9 @@ public class ResourceUnitTest {
 
     @Test
     public void readResourceWithNullId() {
-        IReqresResource apiAuthentication = new ReqresResource();
+        IReqresResource apiResource = new ReqresResourceStub();
         IHandler handler1 = new ResourcesValidatorHandler();
-        IHandler handler2 = new ResourcesRequestHandler(apiAuthentication);
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
         handler1.setNext(handler2);
 
@@ -108,9 +108,9 @@ public class ResourceUnitTest {
 
     @Test
     public void readResourceWithInvalidId() {
-        IReqresResource apiAuthentication = new ReqresResource();
+        IReqresResource apiResource = new ReqresResourceStub();
         IHandler handler1 = new ResourcesValidatorHandler();
-        IHandler handler2 = new ResourcesRequestHandler(apiAuthentication);
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
         handler1.setNext(handler2);
 
@@ -119,9 +119,9 @@ public class ResourceUnitTest {
 
     @Test
     public void readResourceOk() {
-        IReqresResource apiAuthentication = new ReqresResource();
+        IReqresResource apiResource = new ReqresResourceStub();
         IHandler handler1 = new ResourcesValidatorHandler();
-        IHandler handler2 = new ResourcesRequestHandler(apiAuthentication);
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
         handler1.setNext(handler2);
 
@@ -130,9 +130,9 @@ public class ResourceUnitTest {
 
     @Test
     public void updateWithNullId() throws InvalidResourceException {
-        IReqresResource apiAuthentication = new ReqresResource();
+        IReqresResource apiResource = new ReqresResourceStub();
         IHandler handler1 = new ResourcesValidatorHandler();
-        IHandler handler2 = new ResourcesRequestHandler(apiAuthentication);
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
         handler1.setNext(handler2);
 
@@ -143,9 +143,9 @@ public class ResourceUnitTest {
 
     @Test
     public void updateWithInvalidId() throws InvalidResourceException {
-        IReqresResource apiAuthentication = new ReqresResource();
+        IReqresResource apiResource = new ReqresResourceStub();
         IHandler handler1 = new ResourcesValidatorHandler();
-        IHandler handler2 = new ResourcesRequestHandler(apiAuthentication);
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
         handler1.setNext(handler2);
 
@@ -155,9 +155,9 @@ public class ResourceUnitTest {
 
     @Test
     public void updateWithNullResource() throws InvalidResourceException {
-        IReqresResource apiAuthentication = new ReqresResource();
+        IReqresResource apiResource = new ReqresResourceStub();
         IHandler handler1 = new ResourcesValidatorHandler();
-        IHandler handler2 = new ResourcesRequestHandler(apiAuthentication);
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
         handler1.setNext(handler2);
 
@@ -166,9 +166,9 @@ public class ResourceUnitTest {
 
     @Test
     public void updateResourceOk() throws InvalidResourceException {
-        IReqresResource apiAuthentication = new ReqresResource();
+        IReqresResource apiResource = new ReqresResourceStub();
         IHandler handler1 = new ResourcesValidatorHandler();
-        IHandler handler2 = new ResourcesRequestHandler(apiAuthentication);
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
         handler1.setNext(handler2);
 
@@ -178,9 +178,9 @@ public class ResourceUnitTest {
 
     @Test
     public void deleteWithNullId() throws InvalidResourceException {
-        IReqresResource apiAuthentication = new ReqresResource();
+        IReqresResource apiResource = new ReqresResourceStub();
         IHandler handler1 = new ResourcesValidatorHandler();
-        IHandler handler2 = new ResourcesRequestHandler(apiAuthentication);
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
         handler1.setNext(handler2);
 
@@ -189,9 +189,9 @@ public class ResourceUnitTest {
 
     @Test
     public void deleteWithInvalidId() throws InvalidResourceException {
-        IReqresResource apiAuthentication = new ReqresResource();
+        IReqresResource apiResource = new ReqresResourceStub();
         IHandler handler1 = new ResourcesValidatorHandler();
-        IHandler handler2 = new ResourcesRequestHandler(apiAuthentication);
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
         handler1.setNext(handler2);
 
@@ -200,9 +200,9 @@ public class ResourceUnitTest {
 
     @Test
     public void deleteResourceOk() throws InvalidResourceException {
-        IReqresResource apiAuthentication = new ReqresResource();
+        IReqresResource apiResource = new ReqresResourceStub();
         IHandler handler1 = new ResourcesValidatorHandler();
-        IHandler handler2 = new ResourcesRequestHandler(apiAuthentication);
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
         handler1.setNext(handler2);
 

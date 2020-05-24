@@ -12,7 +12,7 @@ import com.brenosalles.handlers.IHandler;
 import com.brenosalles.handlers.concrete.users.UsersRequestHandler;
 import com.brenosalles.handlers.concrete.users.UsersValidatorHandler;
 import com.brenosalles.reqres.api.IReqresUser;
-import com.brenosalles.reqres.api.stubs.ReqresUser;
+import com.brenosalles.reqres.api.stubs.ReqresUserStub;
 import com.brenosalles.users.InvalidUserException;
 import com.brenosalles.users.User;
 import com.brenosalles.users.UserFactory;
@@ -130,9 +130,9 @@ public class UserUnitTest {
 
     @Test
     public void readUsersOk() {
-        IReqresUser apiAuthentication = new ReqresUser();
+        IReqresUser apiUser = new ReqresUserStub();
         IHandler handler1 = new UsersValidatorHandler();
-        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+        IHandler handler2 = new UsersRequestHandler(apiUser);
 
         handler1.setNext(handler2);
 
@@ -141,9 +141,9 @@ public class UserUnitTest {
 
     @Test
     public void readUserWithNullId() {
-        IReqresUser apiAuthentication = new ReqresUser();
+        IReqresUser apiUser = new ReqresUserStub();
         IHandler handler1 = new UsersValidatorHandler();
-        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+        IHandler handler2 = new UsersRequestHandler(apiUser);
 
         handler1.setNext(handler2);
 
@@ -152,9 +152,9 @@ public class UserUnitTest {
 
     @Test
     public void readUserWithInvalidId() {
-        IReqresUser apiAuthentication = new ReqresUser();
+        IReqresUser apiUser = new ReqresUserStub();
         IHandler handler1 = new UsersValidatorHandler();
-        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+        IHandler handler2 = new UsersRequestHandler(apiUser);
 
         handler1.setNext(handler2);
 
@@ -163,9 +163,9 @@ public class UserUnitTest {
 
     @Test
     public void readUserOk() {
-        IReqresUser apiAuthentication = new ReqresUser();
+        IReqresUser apiUser = new ReqresUserStub();
         IHandler handler1 = new UsersValidatorHandler();
-        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+        IHandler handler2 = new UsersRequestHandler(apiUser);
 
         handler1.setNext(handler2);
 
@@ -174,9 +174,9 @@ public class UserUnitTest {
 
     @Test
     public void updateWithNullId() throws InvalidUserException {
-        IReqresUser apiAuthentication = new ReqresUser();
+        IReqresUser apiUser = new ReqresUserStub();
         IHandler handler1 = new UsersValidatorHandler();
-        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+        IHandler handler2 = new UsersRequestHandler(apiUser);
 
         handler1.setNext(handler2);
 
@@ -187,9 +187,9 @@ public class UserUnitTest {
 
     @Test
     public void updateWithInvalidId() throws InvalidUserException {
-        IReqresUser apiAuthentication = new ReqresUser();
+        IReqresUser apiUser = new ReqresUserStub();
         IHandler handler1 = new UsersValidatorHandler();
-        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+        IHandler handler2 = new UsersRequestHandler(apiUser);
 
         handler1.setNext(handler2);
 
@@ -199,9 +199,9 @@ public class UserUnitTest {
 
     @Test
     public void updateWithNullUser() throws InvalidUserException {
-        IReqresUser apiAuthentication = new ReqresUser();
+        IReqresUser apiUser = new ReqresUserStub();
         IHandler handler1 = new UsersValidatorHandler();
-        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+        IHandler handler2 = new UsersRequestHandler(apiUser);
 
         handler1.setNext(handler2);
 
@@ -210,9 +210,9 @@ public class UserUnitTest {
 
     @Test
     public void updateUserOk() throws InvalidUserException {
-        IReqresUser apiAuthentication = new ReqresUser();
+        IReqresUser apiUser = new ReqresUserStub();
         IHandler handler1 = new UsersValidatorHandler();
-        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+        IHandler handler2 = new UsersRequestHandler(apiUser);
 
         handler1.setNext(handler2);
 
@@ -222,9 +222,9 @@ public class UserUnitTest {
 
     @Test
     public void deleteWithNullId() throws InvalidUserException {
-        IReqresUser apiAuthentication = new ReqresUser();
+        IReqresUser apiUser = new ReqresUserStub();
         IHandler handler1 = new UsersValidatorHandler();
-        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+        IHandler handler2 = new UsersRequestHandler(apiUser);
 
         handler1.setNext(handler2);
 
@@ -233,9 +233,9 @@ public class UserUnitTest {
 
     @Test
     public void deleteWithInvalidId() throws InvalidUserException {
-        IReqresUser apiAuthentication = new ReqresUser();
+        IReqresUser apiUser = new ReqresUserStub();
         IHandler handler1 = new UsersValidatorHandler();
-        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+        IHandler handler2 = new UsersRequestHandler(apiUser);
 
         handler1.setNext(handler2);
 
@@ -244,9 +244,9 @@ public class UserUnitTest {
 
     @Test
     public void deleteUserOk() throws InvalidUserException {
-        IReqresUser apiAuthentication = new ReqresUser();
+        IReqresUser apiUser = new ReqresUserStub();
         IHandler handler1 = new UsersValidatorHandler();
-        IHandler handler2 = new UsersRequestHandler(apiAuthentication);
+        IHandler handler2 = new UsersRequestHandler(apiUser);
 
         handler1.setNext(handler2);
 
