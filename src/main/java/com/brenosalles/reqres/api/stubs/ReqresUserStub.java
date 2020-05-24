@@ -7,7 +7,7 @@ import com.brenosalles.users.InvalidUserException;
 import com.brenosalles.users.User;
 import com.brenosalles.users.UserFactory;
 
-public class ReqresUser implements IReqresUser {
+public class ReqresUserStub implements IReqresUser {
     @Override
     public ArrayList<User> readUsers() throws InvalidUserException {
         ArrayList<User> arr = new ArrayList<User>();

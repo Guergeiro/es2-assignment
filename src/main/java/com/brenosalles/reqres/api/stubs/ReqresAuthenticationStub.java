@@ -7,7 +7,7 @@ import com.brenosalles.tokens.TokenFactory;
 import com.brenosalles.users.InvalidUserException;
 import com.brenosalles.users.User;
 
-public class ReqresAuthentication implements IReqresAuthentication {
+public class ReqresAuthenticationStub implements IReqresAuthentication {
     @Override
     public Token register(User user, String password) throws InvalidUserException, InvalidTokenException {
         return TokenFactory.createToken(user, "this is a random token");

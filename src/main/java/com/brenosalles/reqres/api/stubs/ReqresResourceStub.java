@@ -7,7 +7,7 @@ import com.brenosalles.resources.InvalidResourceException;
 import com.brenosalles.resources.Resource;
 import com.brenosalles.resources.ResourceFactory;
 
-public class ReqresResource implements IReqresResource {
+public class ReqresResourceStub implements IReqresResource {
     @Override
     public ArrayList<Resource> readResources() throws InvalidResourceException {
         ArrayList<Resource> arr = new ArrayList<Resource>();
