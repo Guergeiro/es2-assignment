@@ -7,7 +7,7 @@ import com.brenosalles.handlers.IHandler;
 import com.brenosalles.handlers.concrete.authentication.AuthenticationRequestHandler;
 import com.brenosalles.handlers.concrete.authentication.AuthenticationValidatorHandler;
 import com.brenosalles.reqres.api.IReqresAuthentication;
-import com.brenosalles.reqres.api.stubs.ReqresAuthentication;
+import com.brenosalles.reqres.api.stubs.ReqresAuthenticationStub;
 import com.brenosalles.users.InvalidUserException;
 import com.brenosalles.users.User;
 import com.brenosalles.users.UserFactory;
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 public class AuthenticationUnitTest {
     @Test
     public void registerWithNullUser() {
-        IReqresAuthentication apiAuthentication = new ReqresAuthentication();
+        IReqresAuthentication apiAuthentication = new ReqresAuthenticationStub();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
@@ -29,7 +29,7 @@ public class AuthenticationUnitTest {
 
     @Test
     public void registerWithNullPassword() throws InvalidUserException {
-        IReqresAuthentication apiAuthentication = new ReqresAuthentication();
+        IReqresAuthentication apiAuthentication = new ReqresAuthenticationStub();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
@@ -41,7 +41,7 @@ public class AuthenticationUnitTest {
 
     @Test
     public void registerWithLowerPassword() throws InvalidUserException {
-        IReqresAuthentication apiAuthentication = new ReqresAuthentication();
+        IReqresAuthentication apiAuthentication = new ReqresAuthenticationStub();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
@@ -58,7 +58,7 @@ public class AuthenticationUnitTest {
 
     @Test
     public void registerWithHigherPassword() throws InvalidUserException {
-        IReqresAuthentication apiAuthentication = new ReqresAuthentication();
+        IReqresAuthentication apiAuthentication = new ReqresAuthenticationStub();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
@@ -75,7 +75,7 @@ public class AuthenticationUnitTest {
 
     @Test
     public void registerOk() throws InvalidUserException {
-        IReqresAuthentication apiAuthentication = new ReqresAuthentication();
+        IReqresAuthentication apiAuthentication = new ReqresAuthenticationStub();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
@@ -92,7 +92,7 @@ public class AuthenticationUnitTest {
 
     @Test
     public void loginWithNullUser() {
-        IReqresAuthentication apiAuthentication = new ReqresAuthentication();
+        IReqresAuthentication apiAuthentication = new ReqresAuthenticationStub();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
@@ -104,7 +104,7 @@ public class AuthenticationUnitTest {
 
     @Test
     public void loginWithNullPassword() throws InvalidUserException {
-        IReqresAuthentication apiAuthentication = new ReqresAuthentication();
+        IReqresAuthentication apiAuthentication = new ReqresAuthenticationStub();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
@@ -116,7 +116,7 @@ public class AuthenticationUnitTest {
 
     @Test
     public void loginWithLowerPassword() throws InvalidUserException {
-        IReqresAuthentication apiAuthentication = new ReqresAuthentication();
+        IReqresAuthentication apiAuthentication = new ReqresAuthenticationStub();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
@@ -133,7 +133,7 @@ public class AuthenticationUnitTest {
 
     @Test
     public void loginWithHigherPassword() throws InvalidUserException {
-        IReqresAuthentication apiAuthentication = new ReqresAuthentication();
+        IReqresAuthentication apiAuthentication = new ReqresAuthenticationStub();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 
@@ -150,7 +150,7 @@ public class AuthenticationUnitTest {
 
     @Test
     public void loginOk() throws InvalidUserException {
-        IReqresAuthentication apiAuthentication = new ReqresAuthentication();
+        IReqresAuthentication apiAuthentication = new ReqresAuthenticationStub();
         IHandler handler1 = new AuthenticationValidatorHandler();
         IHandler handler2 = new AuthenticationRequestHandler(apiAuthentication);
 

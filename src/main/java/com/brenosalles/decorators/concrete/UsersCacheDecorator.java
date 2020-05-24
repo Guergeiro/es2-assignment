@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.brenosalles.decorators.Decorator;
 import com.brenosalles.decorators.IComponent;
 import com.brenosalles.reqres.cache.IUsersCache;
-import com.brenosalles.reqres.cache.exceptions.UserNotFound;
+import com.brenosalles.reqres.cache.exceptions.UserNotFoundException;
 import com.brenosalles.users.User;
 
 public class UsersCacheDecorator extends Decorator {
@@ -41,7 +41,7 @@ public class UsersCacheDecorator extends Decorator {
     public User readUser(Integer id) {
         try {
             return cache.getUser(id);
-        } catch (UserNotFound e) {
+        } catch (UserNotFoundException e) {
             User user = super.readUser(id);
             cache.addUser(user);
             return user;

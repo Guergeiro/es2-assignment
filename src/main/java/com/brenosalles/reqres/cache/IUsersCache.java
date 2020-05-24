@@ -2,7 +2,7 @@ package com.brenosalles.reqres.cache;
 
 import java.util.ArrayList;
 
-import com.brenosalles.reqres.cache.exceptions.UserNotFound;
+import com.brenosalles.reqres.cache.exceptions.UserNotFoundException;
 import com.brenosalles.users.User;
 
 public interface IUsersCache {
@@ -10,7 +10,7 @@ public interface IUsersCache {
 
     Boolean addUsers(ArrayList<User> users);
 
-    User getUser(Integer id) throws UserNotFound;
+    User getUser(Integer id) throws UserNotFoundException;
 
     ArrayList<User> getUsers();
 

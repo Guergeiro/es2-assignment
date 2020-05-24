@@ -1,9 +1,9 @@
-package com.brenosalles.reqres.cache.mocks;
+package com.brenosalles.reqres.cache.implementation;
 
 import java.util.ArrayList;
 
 import com.brenosalles.reqres.cache.IUsersCache;
-import com.brenosalles.reqres.cache.exceptions.UserNotFound;
+import com.brenosalles.reqres.cache.exceptions.UserNotFoundException;
 import com.brenosalles.users.User;
 
 public class UsersCacheRepository implements IUsersCache {
@@ -20,13 +20,13 @@ public class UsersCacheRepository implements IUsersCache {
     }
 
     @Override
-    public User getUser(Integer id) throws UserNotFound {
+    public User getUser(Integer id) throws UserNotFoundException {
         for (User user : users) {
             if (user.getId() == id) {
                 return user;
             }
         }
-        throw new UserNotFound();
+        throw new UserNotFoundException();
     }
 
     @Override
