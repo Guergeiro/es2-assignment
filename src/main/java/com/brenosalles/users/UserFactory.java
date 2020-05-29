@@ -14,6 +14,7 @@ public abstract class UserFactory {
         if (validateNames(lastName) == false) {
             throw new InvalidUserException();
         }
+
         if (validateAvatar(avatar) == false) {
             throw new InvalidUserException();
         }
