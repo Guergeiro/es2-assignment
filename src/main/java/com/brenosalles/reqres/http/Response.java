@@ -1,15 +1,12 @@
 package com.brenosalles.reqres.http;
 
+import java.util.ArrayList;
+
 public class Response {
     // Attributes
     private Integer statusCode;
     private String body;
-
-    // Constructor
-    public Response(Integer statusCode, String body) {
-        this.statusCode = statusCode;
-        this.body = body;
-    }
+    private ArrayList<String> contentTypes;
 
     // Getters & Setters
     public Integer getStatusCode() {
@@ -26,5 +23,13 @@ public class Response {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public ArrayList<String> getContentTypes() {
+        return contentTypes;
+    }
+
+    public void setContentTypes(ArrayList<String> contentType) {
+        this.contentTypes = contentType;
     }
 }

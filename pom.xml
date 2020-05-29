@@ -25,6 +25,14 @@
       <version>5.6.2</version>
       <scope>test</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params -->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <version>5.6.2</version>
+        <scope>test</scope>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
     <dependency>
         <groupId>com.googlecode.json-simple</groupId>
