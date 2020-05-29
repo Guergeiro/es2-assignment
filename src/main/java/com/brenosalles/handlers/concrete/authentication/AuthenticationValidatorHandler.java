@@ -7,6 +7,9 @@ import com.brenosalles.users.User;
 public class AuthenticationValidatorHandler extends AbstractHandler {
     @Override
     public Token register(User user, String password) {
+        if (user == null) {
+            return null;
+        }
         if (password == null) {
             return null;
         }
@@ -21,6 +24,9 @@ public class AuthenticationValidatorHandler extends AbstractHandler {
 
     @Override
     public Token login(User user, String password) {
+        if (user == null) {
+            return null;
+        }
         if (password == null) {
             return null;
         }

@@ -4,41 +4,47 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import com.brenosalles.decorators.IComponent;
-import com.brenosalles.decorators.concrete.UsersCacheDecorator;
+import com.brenosalles.decorators.concrete.ResourcesCacheDecorator;
 import com.brenosalles.handlers.IHandler;
-import com.brenosalles.handlers.concrete.users.UsersRequestHandler;
-import com.brenosalles.handlers.concrete.users.UsersValidatorHandler;
-import com.brenosalles.reqres.api.IReqresUser;
-import com.brenosalles.reqres.api.stubs.ReqresUserStub;
-import com.brenosalles.reqres.cache.implementation.UsersCacheRepository;
+import com.brenosalles.handlers.concrete.resources.ResourcesRequestHandler;
+import com.brenosalles.handlers.concrete.resources.ResourcesValidatorHandler;
+import com.brenosalles.reqres.api.IReqresResource;
+import com.brenosalles.reqres.api.implementation.ReqresResource;
+import com.brenosalles.reqres.cache.implementation.ResourcesCacheRepository;
+import com.brenosalles.resources.InvalidResourceException;
+import com.brenosalles.resources.Resource;
+import com.brenosalles.resources.ResourceFactory;
 import com.brenosalles.users.InvalidUserException;
-import com.brenosalles.users.User;
-import com.brenosalles.users.UserFactory;
 
 public class Main {
     public static void main(String[] args) throws InvalidUserException, NoSuchFieldException, SecurityException,
-            IllegalArgumentException, IllegalAccessException {
-        IReqresUser apiUser = new ReqresUserStub();
-        IHandler handler1 = new UsersValidatorHandler();
-        IHandler handler2 = new UsersRequestHandler(apiUser);
+            IllegalArgumentException, IllegalAccessException, InvalidResourceException {
+        IReqresResource apiResource = new ReqresResource();
+        IHandler handler1 = new ResourcesValidatorHandler();
+        IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
         handler1.setNext(handler2);
 
-        IComponent finalImplementation = new UsersCacheDecorator(handler1, new UsersCacheRepository());
-
-        User originalUser = UserFactory.createUser(null, "email@email.com", "firstName", "lastName", "avatar");
-
-        User createdUser = finalImplementation.createUser(originalUser);
+        IComponent finalImplementation = new ResourcesCacheDecorator(handler1, new ResourcesCacheRepository());
 
         // Access private cache
         Field f1 = finalImplementation.getClass().getDeclaredField("cache");
         f1.setAccessible(true);
-        UsersCacheRepository cache = (UsersCacheRepository) f1.get(finalImplementation);
+        ResourcesCacheRepository cache = (ResourcesCacheRepository) f1.get(finalImplementation);
 
         // Access private cache ArrayList
-        Field f2 = cache.getClass().getDeclaredField("users");
+        Field f2 = cache.getClass().getDeclaredField("resources");
         f2.setAccessible(true);
-        ArrayList<User> users = (ArrayList<User>) f2.get(cache);
-        System.out.println(users.get(0));
+        ArrayList<Resource> resources = (ArrayList<Resource>) f2.get(cache);
+        Integer originalSize = resources.size();
+
+        Resource originalResource = ResourceFactory.createResource(null, "name", 2000, "#123123", "pantoneValue");
+        originalResource.setId(finalImplementation.createResource(originalResource).getId());
+
+        System.out.println(resources.contains(originalResource));
+        for (Resource resource : resources) {
+            System.out.println(resource.getId());
+        }
+
     }
 }
