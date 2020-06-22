@@ -3,7 +3,6 @@ package com.brenosalles;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Field;
@@ -15,7 +14,7 @@ import com.brenosalles.handlers.IHandler;
 import com.brenosalles.handlers.concrete.resources.ResourcesRequestHandler;
 import com.brenosalles.handlers.concrete.resources.ResourcesValidatorHandler;
 import com.brenosalles.reqres.api.IReqresResource;
-import com.brenosalles.reqres.api.stubs.ReqresResourceStub;
+import com.brenosalles.reqres.api.implementation.ReqresResource;
 import com.brenosalles.reqres.cache.implementation.ResourcesCacheRepository;
 import com.brenosalles.resources.InvalidResourceException;
 import com.brenosalles.resources.Resource;
@@ -23,74 +22,10 @@ import com.brenosalles.resources.ResourceFactory;
 
 import org.junit.jupiter.api.Test;
 
-public class ResourceUnitTest {
-    @Test
-    public void createResourceWithNullName() {
-        assertThrows(InvalidResourceException.class, () -> {
-            ResourceFactory.createResource(null, null, 2000, "#123123", "Some Color");
-        });
-    }
-
-    @Test
-    public void createResourceWithLowerName() {
-        assertThrows(InvalidResourceException.class, () -> {
-            String name = "";
-            for (int i = 0; i < 3; i++) {
-                name += "a";
-            }
-            ResourceFactory.createResource(null, name, 2000, "#123123", "Some Color");
-        });
-    }
-
-    @Test
-    public void createResourceWithHigherName() {
-        assertThrows(InvalidResourceException.class, () -> {
-            String name = "";
-            for (int i = 0; i < 17; i++) {
-                name += "a";
-            }
-            ResourceFactory.createResource(null, name, 2000, "#123123", "Some Color");
-        });
-    }
-
-    @Test
-    public void createResourceWithNullYear() {
-        assertThrows(InvalidResourceException.class, () -> {
-            ResourceFactory.createResource(null, "Resource", null, "#123123", "Some Color");
-        });
-    }
-
-    @Test
-    public void createResourceWithNullColor() {
-        assertThrows(InvalidResourceException.class, () -> {
-            ResourceFactory.createResource(null, "Resource", 2000, null, "Some Color");
-        });
-    }
-
-    @Test
-    public void createResourceWithInvalidColor() {
-        assertThrows(InvalidResourceException.class, () -> {
-            ResourceFactory.createResource(null, "Resource", 2000, "red", "Some Color");
-        });
-    }
-
-    @Test
-    public void createResourceWithNullPantoneColor() {
-        assertThrows(InvalidResourceException.class, () -> {
-            ResourceFactory.createResource(null, "Resource", 2000, "#123123", null);
-        });
-    }
-
-    @Test
-    public void createResourceOk() throws InvalidResourceException {
-        assertEquals(Resource.class,
-                ResourceFactory.createResource(null, "Resource", 2000, "#123123", "Some Color").getClass());
-
-    }
-
+public class ResourceIntegrationTest {
     @Test
     public void readResourcesOk() {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -101,7 +36,7 @@ public class ResourceUnitTest {
 
     @Test
     public void readResourceWithNullId() {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -112,7 +47,7 @@ public class ResourceUnitTest {
 
     @Test
     public void readResourceWithInvalidId() {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -123,7 +58,7 @@ public class ResourceUnitTest {
 
     @Test
     public void readResourceOk() {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -134,7 +69,7 @@ public class ResourceUnitTest {
 
     @Test
     public void updateWithNullId() throws InvalidResourceException {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -147,7 +82,7 @@ public class ResourceUnitTest {
 
     @Test
     public void updateWithInvalidId() throws InvalidResourceException {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -159,7 +94,7 @@ public class ResourceUnitTest {
 
     @Test
     public void updateWithNullResource() throws InvalidResourceException {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -170,7 +105,7 @@ public class ResourceUnitTest {
 
     @Test
     public void updateResourceOk() throws InvalidResourceException {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -182,7 +117,7 @@ public class ResourceUnitTest {
 
     @Test
     public void deleteWithNullId() throws InvalidResourceException {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -193,7 +128,7 @@ public class ResourceUnitTest {
 
     @Test
     public void deleteWithInvalidId() throws InvalidResourceException {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -204,7 +139,7 @@ public class ResourceUnitTest {
 
     @Test
     public void deleteResourceOk() throws InvalidResourceException {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -217,7 +152,7 @@ public class ResourceUnitTest {
     @SuppressWarnings("unchecked")
     public void readResourceInCacheInvalidId() throws InvalidResourceException, NoSuchFieldException, SecurityException,
             IllegalArgumentException, IllegalAccessException {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -245,7 +180,7 @@ public class ResourceUnitTest {
     @SuppressWarnings("unchecked")
     public void readResourceInCacheOk() throws InvalidResourceException, NoSuchFieldException, SecurityException,
             IllegalArgumentException, IllegalAccessException {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -273,7 +208,7 @@ public class ResourceUnitTest {
     @SuppressWarnings("unchecked")
     public void createResourceInCacheOk() throws InvalidResourceException, NoSuchFieldException, SecurityException,
             IllegalArgumentException, IllegalAccessException {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -303,7 +238,7 @@ public class ResourceUnitTest {
     @SuppressWarnings("unchecked")
     public void updateResourceInCacheInvalidId() throws InvalidResourceException, NoSuchFieldException,
             SecurityException, IllegalArgumentException, IllegalAccessException {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -333,7 +268,7 @@ public class ResourceUnitTest {
     @SuppressWarnings("unchecked")
     public void updateResourceInCacheOk() throws InvalidResourceException, NoSuchFieldException, SecurityException,
             IllegalArgumentException, IllegalAccessException {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -364,7 +299,7 @@ public class ResourceUnitTest {
     @SuppressWarnings("unchecked")
     public void deleteResourceInCacheInvalidId() throws InvalidResourceException, NoSuchFieldException,
             SecurityException, IllegalArgumentException, IllegalAccessException {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 
@@ -393,7 +328,7 @@ public class ResourceUnitTest {
     @SuppressWarnings("unchecked")
     public void deleteResourceInCacheOk() throws InvalidResourceException, NoSuchFieldException, SecurityException,
             IllegalArgumentException, IllegalAccessException {
-        IReqresResource apiResource = new ReqresResourceStub();
+        IReqresResource apiResource = new ReqresResource();
         IHandler handler1 = new ResourcesValidatorHandler();
         IHandler handler2 = new ResourcesRequestHandler(apiResource);
 

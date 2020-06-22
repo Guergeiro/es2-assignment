@@ -18,15 +18,20 @@ import org.json.simple.parser.ParseException;
 public class ReqresUser implements IReqresUser {
 
     @Override
-    @SuppressWarnings("unchecked")
-    public ArrayList<User> readUsers() {
+    public ArrayList<User> readUsers() throws InvalidUserException {
         Response response = Request.makeHttpRequest("https://reqres.in/api/users", HttpMethods.GET, null);
         if (response.getStatusCode() < 400) {
             JSONParser parser = new JSONParser();
             try {
                 JSONObject message = (JSONObject) parser.parse(response.getBody());
                 JSONArray arr = (JSONArray) message.get("data");
-                return new ArrayList<User>(arr);
+                ArrayList<User> users = new ArrayList<User>();
+                for (Object user : arr) {
+                    JSONObject obj = (JSONObject) user;
+                    users.add(UserFactory.createUser(Math.toIntExact((Long) obj.get("id")), (String) obj.get("email"),
+                            (String) obj.get("first_name"), (String) obj.get("last_name"), (String) obj.get("avatar")));
+                }
+                return users;
             } catch (ParseException e) {
                 System.out.println(e.getMessage());
             }
@@ -43,7 +48,7 @@ public class ReqresUser implements IReqresUser {
             try {
                 JSONObject message = (JSONObject) parser.parse(response.getBody());
                 JSONObject obj = (JSONObject) message.get("data");
-                return UserFactory.createUser((Integer) obj.get("id"), (String) obj.get("email"),
+                return UserFactory.createUser(Math.toIntExact((Long) obj.get("id")), (String) obj.get("email"),
                         (String) obj.get("first_name"), (String) obj.get("last_name"), (String) obj.get("avatar"));
             } catch (ParseException e) {
                 System.out.println(e.getMessage());
@@ -65,13 +70,14 @@ public class ReqresUser implements IReqresUser {
         Response response = Request.makeHttpRequest("https://reqres.in/api/users", HttpMethods.POST,
                 obj.toJSONString());
 
+        System.out.println(response.getBody());
         if (response.getStatusCode() < 400) {
             JSONParser parser = new JSONParser();
             try {
                 JSONObject message = (JSONObject) parser.parse(response.getBody());
-                JSONObject obj2 = (JSONObject) message.get("message");
-                return UserFactory.createUser((Integer) obj2.get("id"), (String) obj2.get("email"),
-                        (String) obj2.get("first_name"), (String) obj2.get("last_name"), (String) obj2.get("avatar"));
+                return UserFactory.createUser(Integer.parseInt((String) message.get("id")),
+                        (String) message.get("email"), (String) message.get("first_name"),
+                        (String) message.get("last_name"), (String) message.get("avatar"));
             } catch (ParseException e) {
                 System.out.println(e.getMessage());
             }

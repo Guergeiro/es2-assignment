@@ -17,12 +17,18 @@ public class UsersValidatorHandler extends AbstractHandler {
         if (id == null) {
             return null;
         }
+        if (id == 0) {
+            return null;
+        }
         return super.readUser(id);
     }
 
     @Override
     public Boolean updateUser(Integer id, User user) {
         if (id == null) {
+            return false;
+        }
+        if (id == 0) {
             return false;
         }
         if (user == null) {
@@ -34,6 +40,9 @@ public class UsersValidatorHandler extends AbstractHandler {
     @Override
     public Boolean deleteUser(Integer id) {
         if (id == null) {
+            return false;
+        }
+        if (id == 0) {
             return false;
         }
         return super.deleteUser(id);

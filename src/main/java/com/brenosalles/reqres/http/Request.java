@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public abstract class Request {
     public static Response makeHttpRequest(String url, HttpMethods method, String body) {
@@ -50,7 +52,15 @@ public abstract class Request {
                 rd.close();
 
             }
-            return new Response(conn.getResponseCode(), result.toString());
+            Response response = new Response();
+            response.setStatusCode(conn.getResponseCode());
+            response.setBody(result.toString());
+            if (conn.getContentType() != null) {
+                ArrayList<String> contentTypes = new ArrayList<String>(
+                        Arrays.asList(conn.getContentType().trim().split(";")));
+                response.setContentTypes(contentTypes);
+            }
+            return response;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,7 +69,11 @@ public abstract class Request {
                 conn.disconnect();
             }
         }
-
-        return new Response(500, "Internal server error");
+        Response response = new Response();
+        response.setStatusCode(500);
+        response.setBody("{\"error\":\"Internal Server Error\"}");
+        ArrayList<String> contentTypes = new ArrayList<String>(Arrays.asList("application/json"));
+        response.setContentTypes(contentTypes);
+        return response;
     }
 }

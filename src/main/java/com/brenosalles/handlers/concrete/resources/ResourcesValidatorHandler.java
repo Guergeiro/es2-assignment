@@ -17,12 +17,18 @@ public class ResourcesValidatorHandler extends AbstractHandler {
         if (id == null) {
             return null;
         }
+        if (id == 0) {
+            return null;
+        }
         return super.readResource(id);
     }
 
     @Override
     public Boolean updateResource(Integer id, Resource resource) {
         if (id == null) {
+            return false;
+        }
+        if (id == 0) {
             return false;
         }
         if (resource == null) {
@@ -34,6 +40,9 @@ public class ResourcesValidatorHandler extends AbstractHandler {
     @Override
     public Boolean deleteResource(Integer id) {
         if (id == null) {
+            return false;
+        }
+        if (id == 0) {
             return false;
         }
         return super.deleteResource(id);
